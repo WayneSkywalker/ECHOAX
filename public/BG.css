@@ -58,7 +58,7 @@ body{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  font-size: 2.5vw;
+	font-size: 2.5vw;
 }
 @media only screen and (max-width: 768px){
   #headn{
@@ -97,12 +97,6 @@ body{
   left: 10px;
 	font-size: 150px;
 	width: 100%;
-}
-#c1,#c2,#c3{
-	transition-duration: 0.2s;
-}
-#c1:hover,#c2:hover,#c3:hover {
-	opacity: 0.4;
 }
 #log{
 	border-style: none;
@@ -470,6 +464,13 @@ textarea[name=echo],input[name=echo]{
 .col-33{
   width: 100%;
 }
+#c1,#c2,#c3{    /*used in BG3c.html*/
+	transition-duration: 0.2s;
+}
+.col-33:hover #c1,.col-33:hover #c2,.col-33:hover #c3{ /*used in BG3c.html*/
+	opacity: 0.4;
+}
+
 .col-33card{
 	width: 33.33333333333%;
 	align-items: center;
