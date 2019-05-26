@@ -1,16 +1,15 @@
 const express = require('express'),
     bodyParser = require('body-parser'),
-//    validator = require('express-validator'),
-//    methodOverride = require('method-override'),
-    mongoose = require('mongoose');
+    mongoose = require('mongoose'),
+    member = require('./models/member'),
+    news = require('./models/news');
 const app = express();
 
 //mongoose.connect("mongodb://localhost/ECHOAX_app");
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
-//app.use(validator());
-//app.use(methodOverride("_method"));
+//app.use(bodyParser.json());
 
 app.get("/", function(req,res){
     res.render("main");
