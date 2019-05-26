@@ -1,0 +1,164 @@
+<% include ./partials/header %>
+<!-- title -->
+<% if(category === 'fakenews'){%> <title>Category - Fake news</title> <% } else { %> <title>Category - Hoax</title> <% } %>    
+</head>
+<!-- body background -->
+<% if(category === 'fakenews'){%> <body background="https://i.imgur.com/MjBOCeH.png"> <% } else { %> <body background="https://i.imgur.com/ZnzXwZT.png"> <% } %>
+    <% include ./partials/navbar %>
+    <div id="headca">
+        <center>CATEGORY</center>
+    </div>
+    <!-- search -->
+    <div>
+        <form class="search-topic">
+            <% if(category === 'fakenews'){%> <input type="text" name="" placeholder="SEARCH" id="1"> <% } else { %> <input type="text" id="stp" placeholder="SEARCH" autofocus> <% } %>
+        </form>
+        <% if(category === 'fakenews'){%>
+        <div id="fake" class="topic">
+            <center><img id="searchbtn" src="https://i.imgur.com/P9fd36x.png"></i>FAKE NEWS</center>
+        </div>
+        <% } else { %>
+        <div id="hoax" class="topic">
+            <center><img id="searchbtn" src="https://i.imgur.com/P9fd36x.png"></i>HOAX</center>
+        </div>
+        <% } %>
+    </div>
+    <!-- card -->
+    <% if(category === 'fakenews'){%>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4  col-12">
+                <a href="polithic.html">
+                    <div class="card cardbox " id="fakecard">
+                        <center>POLITICS</center>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4  col-12">
+                <a href="polithic.html">
+                    <div class="card cardbox " id="fakecard">
+                        <center>ECONOMICS</center>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4  col-12">
+                <a href="polithic.html">
+                    <div class="card cardbox " id="fakecard">
+                        <center>CRIME</center>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4  col-12">
+                <a href="polithic.html">
+                    <div class="card cardbox " id="fakecard">
+                        <center>HEALTH</center>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4  col-12">
+                <a href="polithic.html">
+                    <div class="card cardbox " id="fakecard">
+                        <center>TECHNOLOGY</center>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4  col-12">
+                <a href="polithic.html">
+                    <div class="card cardbox " id="fakecard">
+                        <center>SPORT</center>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4  col-12">
+                <a href="polithic.html">
+                    <div class="card cardbox " id="fakecard">
+                        <center>ENTERTAINMENT</center>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4  col-12">
+                <a href="polithic.html">
+                    <div class="card cardbox " id="fakecard">
+                        <center>EDUCATION</center>
+                    </div>
+                </a>
+            </div>
+            <div class="col-lg-4  col-12">
+                <a href="polithic.html">
+                    <div class="card cardbox " id="fakecard">
+                        <center>SCIENCE</center>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <% } else { %>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4  col-12">
+                <div class="card cardbox" id="hoaxcard">
+                    <center>APRIL FOOL'S DAY</center>
+                </div>
+            </div>
+            <div class="col-lg-4  col-12">
+                <div class="card cardbox" id="hoaxcard">
+                    <center>SCIENCE</center>
+                </div>
+            </div>
+            <div class="col-lg-4  col-12">
+                <div class="card cardbox" id="hoaxcard">
+                    <center>SCIENCE</center>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4  col-12">
+                <div class="card cardbox" id="hoaxcard">
+                    <center>SCIENCE</center>
+                </div>
+            </div>
+            <div class="col-lg-4  col-12">
+                <div class="card cardbox" id="hoaxcard">
+                    <center>SCIENCE</center>
+                </div>
+            </div>
+            <div class="col-lg-4  col-12">
+                <div class="card cardbox" id="hoaxcard">
+                    <center>SCIENCE</center>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4  col-12 ">
+                <div class="card cardbox" id="hoaxcard">
+                    <center>SCIENCE</center>
+                </div>
+            </div>
+            <div class="col-lg-4  col-12 ">
+                <div class="card cardbox" id="hoaxcard">
+                    <center>EDUCATION</center>
+                </div>
+            </div>
+            <div class="col-lg-4  col-12 ">
+                <div class="card cardbox" id="hoaxcard">
+                    <center>SCIENCE</center>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% } %>
+<% include ./partials/footer %>

@@ -1,0 +1,68 @@
+<% include ./partials/header %>
+    <title>ECHOAX - Sign Up</title>
+</head>
+<body background="https://i.imgur.com/TniTm3s.png" class="bg">
+    <% include ./partials/navbar %>
+    <div id="headsign" class="w">
+        <center>CREATE YOUR OWN ACCOUNT</center>
+    </div>
+    <div class="container w">
+        <form action="" method="">
+            <center>
+                <p class="w">PLEASE FILL IN THIS FORM TO CREATE AN ACCOUNT.</p>
+            </center>
+            <div class="row">
+                <div class="col-40 useremailpass">
+                    <label for="user">USERNAME</label>
+                    <input type="text" name="username" placeholder="username">
+                    <label for="email">EMAIL</label>
+                    <input type="email" name="email" placeholder="example@mail.com">
+                    <label for="password">PASSWORD</label>
+                    <input type="password" name="pwd">
+                    <label for="password">CONFIRM YOUR PASSWORD</label>
+                    <input type="password" name="re-pwd">
+                </div>
+    
+                <div class="col-60 ">
+                    <div class="row bio ">
+                        <div class="col-50sl">
+                            <label for="firstname">FIRSTNAME</label>
+                            <input type="text" name="firstname" required>
+                        </div>
+                        <div class="col-50s">
+                            <label for="lastname">LASTNAME</label>
+                            <input type="text" name="lastname" required>
+                        </div>
+                    </div>
+                    <div class="row bio ">
+                        <div class="col-50sl">
+                            <label for="firstname">GENDER</label><br>
+                            <div style="line-height: 2">
+                                <input type="radio" name="gender" required> MALE
+                                <input type="radio" name="gender" required> FEMALE
+                            </div>
+                        </div>
+                        <div class="col-50s">
+                            <label for="birthdate">BIRTHDATE</label>
+                            <div style="line-height: 1.5">
+                                <input type="date" name="birthdate" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row biobio">
+                        <label for="location">LOCATION</label>
+                        <input type="text" name="bio" maxlength="100" required>
+                    </div>
+                    <div class="row biobio">
+                        <label for="bio">BIO</label>
+                        <input type="text" name="bio" maxlength="100" required>
+                    </div>
+                </div>
+            </div>
+    
+            <center style="padding:10px 0 10px;">
+                <button type="submit" class="signupbtn" name="signbtn">SIGN UP</button>
+            </center>
+        </form>
+    </div>
+<% include ./partials/footer %>

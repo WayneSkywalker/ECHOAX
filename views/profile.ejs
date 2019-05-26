@@ -1,0 +1,51 @@
+<% include ./partials/header %>
+    <title>ECHOAX - Profile</title>
+</head>
+<body background="https://i.imgur.com/Fg7WsNm.png" class="bg">
+    <% include ./partials/navbar %>
+    <div class=" container box">
+        <div class="row">
+            <div class="col-25">
+                <center> <img src="https://i.imgur.com/TBu6Oc0.jpg" width="150px" height="150px"
+                        style=" border-radius: 50%;"></center>
+            </div>
+            <div class="col-75">
+                <h class="w">
+                    <r> Username </r><br>
+                    <n> Firstname Lastname </n><br>
+                    <m> motto. </m>
+                </h>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-25">
+                <div class="card">
+                    <hd>GENDER</hd>
+                    xxxxxx
+                    <hd>BIRTH DATE</hd>
+                    xx xx xx
+                    <hd>LOCATION</hd>
+                    xxxxxxxxxxxxxxxx
+                    <center><input type="button" name="edit" value="EDIT PROFILE" onclick="location.href='edit.html';">
+                    </center>
+                </div>
+            </div>
+            <div class="col-75">
+                <div class="tab">
+                    <button class="tablinks active" onclick="opentab(event, 'OVERVIEW')">OVERVIEW</button>
+                    <button class="tablinks" onclick="opentab(event, 'STAT')">STAT</button>
+                    <a href="ECHO.html"><button class="w"
+                            style="float: right; background-color: red; border-radius: 10px;">ECHO</button></a>
+                </div>
+                <div id="OVERVIEW" class="tabcontent" style="display: block; ">
+                    <h3>E-mail</h3>
+                    <p>XXXXXX@XXXX.COM</p>
+                </div>
+                <div id="STAT" class="tabcontent">
+                    <h3>VOTE</h3>
+                    <p>Paris is the capital of France.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<% include ./partials/footer %>

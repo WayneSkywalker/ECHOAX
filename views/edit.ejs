@@ -1,0 +1,67 @@
+<% include ./partials/header %>
+    <title>ECHOAX - Edit your profile</title>
+</head>
+<body background="https://i.imgur.com/TniTm3s.png" class="bg">
+    <% include ./partials/navbar %>
+    <div id="headsign" class="w">
+        <center>EDIT YOUR PROFILE</center>
+    </div>
+    <div class="container w">
+        <form action="action_page.php">
+            <div class="row">
+                <div class="col-40 useremailpass">
+                    <label for="user">USERNAME</label>
+                    <p class="bioparam">Username</p>
+                    <label for="password">OLD PASSWORD</label>
+                    <input type="password" name="old-pwd">
+                    <label for="password">NEW PASSWORD</label>
+                    <input type="password" name="pwd">
+                    <label for="password">CONFIRM YOUR NEW PASSWORD</label>
+                    <input type="password" name="re-pwd">
+                    <center class="btnedit1">
+                        <button class="greenbtn w">FINISH</button>
+                        <button class="redbtn w">CANCEL</button>
+                    </center>
+                </div>
+    
+                <div class="col-60 ">
+                    <div class="row bio ">
+                        <div class="col-50sl">
+                            <label for="firstname">FIRSTNAME</label>
+                            <input type="text" name="firstname" required>
+                        </div>
+                        <div class="col-50s">
+                            <label for="lastname">LASTNAME</label>
+                            <input type="text" name="lastname" required>
+                        </div>
+                    </div>
+                    <div class="row bio ">
+                        <div class="col-50sl">
+                            <label for="gender">GENDER</label><br>
+                            <p class="bioparam">xxxxxx</p>
+                        </div>
+                        <div class="col-50s">
+                            <label for="birthdate">BIRTHDATE</label>
+                            <div style="line-height: 1.5">
+                                <p class="bioparam">00 XXXXXXXXX 0000</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row biobio">
+                        <label for="location">LOCATION</label>
+                        <input type="text" name="bio" maxlength="100" required>
+                    </div>
+                    <div class="row biobio">
+                        <label for="bio">BIO</label>
+                        <input type="text" name="bio" maxlength="100" required>
+                    </div>
+                </div>
+            </div>
+    </div>
+    <center class="btnedit2" style="padding-top: 10px;">
+        <button class="greenbtn w">FINISH</button>
+        <button class="redbtn w">CANCEL</button>
+    </center>
+    </form>
+    </div>
+<% include ./partials/footer %>

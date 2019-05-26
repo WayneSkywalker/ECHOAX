@@ -1,0 +1,66 @@
+<% include ./partials/header %>
+    <title>ECHOAX - ECHO</title>
+</head>
+<body background="https://i.imgur.com/gaFKvWi.png" class="bg" >
+    <% include ./partials/navbar %>
+    <center class="w" style="font-size: 30px; ">
+        <d style="color: red">ECHO</d> : SEND TO SHARE SOME LIES TO OTHER
+    </center>
+    <div class="container echo">
+        <form action="action_page.php">
+    
+            <div class="row">
+                <div class="col-30">
+                    <label for="topic">TOPIC</label>
+                </div>
+                <div class="col-70">
+                    <input type="text" name="echo" placeholder="" required maxlength="50">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-30">
+                    <label for="category">CATEGORY</label>
+                </div>
+                <div class="col-70">
+                    <input type="radio" name="gender" required>FAKE NEWS
+                    <input type="radio" name="gender" required>HOAX
+                    <input type="radio" name="gender" required>PHISHING
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-30">
+                    <label for="desc">DESCRIPTION</label>
+                </div>
+                <div class="col-70">
+                    <textarea name="echo" placeholder="Write something.." style="height:200px"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-30">
+                    <label for="picture">PICTURE</label>
+                </div>
+                <div class="col-70">
+                    <input type="file" name="pic" accept="image/*">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-30">
+                    <label for="REFERENCE">REFERENCE</label>
+                </div>
+                <div class="col-70">
+                    <input type="text" name="echo" placeholder="" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-30"></div>
+                <div class="col-70">
+                    <input type="text" name="echo" placeholder="" required>
+                </div>
+            </div>
+            <center style="padding-top: 10px;">
+                <button type="submit" class="greenbtn w" name="sendbtn">SEND</button>
+                <button type="button" class="redbtn w" name="cancelbtn">CANCEL</button>
+            </center>
+        </form>
+    </div>
+<% include ./partials/footer %>
