@@ -6,7 +6,7 @@ const express = require('express'),
     validator = require('express-validator'), 
     session = require('express-session'),
     flash = require('connect-flash'),
-    localStrategy = require('passport-local'), 
+    localStrategy = require('passport-local'),
     bcrypt = require('bcryptjs'); 
     member = require('./models/member'),
     news = require('./models/news');
@@ -101,8 +101,8 @@ app.post("/register", function (req, res) {
     //create account
     let username = req.body.username;
     let email = req.body.email;
-    let password = req.body.pwd;
-    let password2 = req.body.repwd;
+    let password = req.body.password;
+    let confirm_password = req.body.confirm_password;
     let firstname = req.body.firstname;
     let lastname = req.body.lastname;
     let gender = req.body.gender;
@@ -111,26 +111,27 @@ app.post("/register", function (req, res) {
     let bio = req.body.bio;
 
     req.checkBody('username', 'Username is required.').notEmpty();
-    req.checkBody('username', 'Username has already existed.').equals(member.findOne({ username: username }));
+    //req.checkBody('username', 'Username has already existed.').equals(member.findOne({ username: username }));
     req.checkBody('email', 'E-mail is required.').notEmpty();
     req.checkBody('email', 'E-mail is not valid.').isEmail();
-    req.checkBody('email', 'E-mail has already existed.').equals(member.findOne({ email: email }));
+    //req.checkBody('email', 'E-mail has already existed.').equals(member.findOne({ email: email }));
     req.checkBody('password', 'Password is required.').notEmpty();
-    req.checkBody('password', 'Password must be least 8 charaacters long.').isLength({ min: 8 });
-    req.checkBody('password2', 'Please confirm your password.').notEmpty();
-    req.checkBody('password2', 'Passwords do not match.').equals(req.body.pwd);
+    req.checkBody('password', 'Password must be least 8 characters long.').isLength({ min: 8 });
+    req.checkBody('confirm_password', 'Please confirm your password.').notEmpty();
+    req.checkBody('confirm_password', 'Passwords do not match.').equals(req.body.pwd);
     req.checkBody('firstname', 'Firstname is required.').notEmpty();
-    req.checkBody('firstname', 'Firstname has already existed.').equals(member.findOne({ firstname: firstname }));
+    //req.checkBody('firstname', 'Firstname has already existed.').equals(member.findOne({ firstname: firstname }));
     req.checkBody('lastname', 'Lastname is required.').notEmpty();
-    req.checkBody('lastname', 'Lastname has already existed.').equals(member.findOne({ lastname: lastname }));
+    //req.checkBody('lastname', 'Lastname has already existed.').equals(member.findOne({ lastname: lastname }));
     req.checkBody('gender', 'Gender is required.').notEmpty();
     req.checkBody('birthdate', 'Birthdate is required.').notEmpty();
 
-    let errors = req.validationError();
+    let errors = req.validationErrors();
 
     if (errors) {
         //res.render("signup");
-        res.render("signup",{errors: errors});
+        //res.render("test",{errors: errors});
+        res.send(errors);
     } else {
         let newMember = new member({
             username: username,
