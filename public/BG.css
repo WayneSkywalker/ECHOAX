@@ -60,36 +60,6 @@ body{
   transform: translate(-50%, -50%);
 	font-size: 2.5vw;
 }
-@media only screen and (max-width: 768px){
-  #headn{
-		margin: 0%;
-		text-align: center;
-}
-}
-@media only screen and (max-width: 1024px){
-  #headca{
-  	font-size: 10vw;
-	}
-	.centered{
-		font-size: 4vw;
-	}
-}
-@media only screen and (max-width: 768px){
-  #headca{
-  	font-size: 8vh;
-	}
-	.centered{
-		font-size: 4vh;
-	}
-}
-@media only screen and (max-width: 370px){
-  #headca{
-  	font-size: 8vh;
-	}
-	.centered{
-		font-size: 4vh;
-	}
-}
 
 .topleft {
   position: absolute;
@@ -176,22 +146,7 @@ ul.navbar-nav li a.nav-link.hide-item{
 	transform: translateX(-50%);
 	opacity: 0;
 	visibility: hidden;
-	transition: 0.5s;
-}
-@media only screen and (max-width:768px){
-	.search-form{
-		position: relative;
-		left: 50%;
-		width: 100%;
-		height: auto;
-		transform: translateX(-50%);
-		opacity: 1;
-		visibility: visible;
-		transition: 0.5s;
-	}
-	#search{
-		opacity: 0;
-	}
+	transition: 1s;
 }
 .search-form input{
 	width: 100%;
@@ -375,7 +330,6 @@ input[name='edit']{
   overflow: hidden;
   border: none;
 }
-
 .tab button {
   background-color:inherit;
   float: left;
@@ -393,7 +347,6 @@ input[name='edit']{
 .tab button.active {
   background-color: white;
 }
-
 .tabcontent {
   display: none;
   padding: 6px 12px;
@@ -436,11 +389,6 @@ textarea[name=echo],input[name=echo]{
 	width : 200px ;
 	height : 200px;
 }
-@media only screen and (max-width: 768px){
-  .picphish{
-		width: 100%;
-	}
-}
 .col-25 {
   float: left;
   width: 25%;
@@ -470,7 +418,6 @@ textarea[name=echo],input[name=echo]{
 .col-33:hover #c1,.col-33:hover #c2,.col-33:hover #c3{ /*used in BG3c.html*/
 	opacity: 0.4;
 }
-
 .col-33card{
 	width: 33.33333333333%;
 	align-items: center;
@@ -514,24 +461,79 @@ textarea[name=echo],input[name=echo]{
   width: 70%;
   margin-top: 6px;
 }
+
 @media only screen and (max-width: 768px){
-  r {
-    font-size: 50px;
-  }
-}
-@media only screen and (max-width: 768px){
-  .col-60 ,.col-40,.col-33card,.col-25,.col-75{
-    width: 100%;
-		margin: 0% 3% 0% 3%;
-  }
-}
-@media only screen and (max-width: 768px){
-  .col-50s ,.col-50sl{
+	.col-50s ,.col-50sl{
 		width: 100%;
 		padding: 0%;
 	}
 	.biobio{
 		padding: 1.5% 1.5% 1.5% 1.5%;
+	}
+	.col-60 ,.col-40,.col-33card,.col-25,.col-75{
+    width: 100%;
+		margin: 0% 3% 0% 3%;
+	}
+	r {
+    font-size: 50px;
+	}
+	.picphish{
+		width: 100%;
+	}
+	#headn{
+		margin: 0%;
+		text-align: center;
+	}
+	#headca{
+  	font-size: 8vh;
+	}
+	.centered{
+		font-size: 4vh;
+	}
+	.search-form{
+		position: relative;
+		left: 50%;
+		width: 100%;
+		height: auto;
+		transform: translateX(-50%);
+		opacity: 1;
+		visibility: visible;
+		transition: 1s;
+	}
+	#search{
+		visibility: hidden;
+		opacity: 0;
+	}
+}
+@media only screen and (max-width: 1024px){
+  #headca{
+  	font-size: 10vw;
+	}
+	.centered{
+		font-size: 4vw;
+	}
+	@media(orientation:portrait){
+	.col-50s ,.col-50sl{
+		width: 100%;
+		padding: 0%;
+	}
+	.biobio{
+		padding: 1.5% 1.5% 1.5% 1.5%;
+	}
+	.col-60 ,.col-40,.col-33card,.col-25,.col-75{
+    width: 100%;
+		margin: 0% 3% 0% 3%;
+	}
+}
+	
+}
+
+@media only screen and (max-width: 370px){
+  #headca{
+  	font-size: 8vh;
+	}
+	.centered{
+		font-size: 4vh;
 	}
 }
 @media only screen and (min-width: 1025px){
@@ -539,6 +541,14 @@ textarea[name=echo],input[name=echo]{
 	width: 33%;
 	flex: 0 0 33.333333333%;
 	position:relative;
+	}
+}
+@media only screen and (min-width: 1024px) and (orientation : landscape){
+	.cen{
+	top: 50%; 
+	left: 50%; 
+	transform: translate(-50%,-50%);
+	position: fixed;
 }
 }
 @media only screen and (max-width: 1025px){
@@ -562,13 +572,6 @@ textarea[name=echo],input[name=echo]{
   	width: 100%
   }
 }
-@media only screen and (max-width: 600px){
-  .col-30, .col-70 {
-    width: 100%;
-    margin-top: 0;
-    padding: 5px 0px 5px 0px;
-  }
-}
 @media only screen and (max-width: 990px){
   .col-70u {
     width: 100%;
@@ -590,6 +593,11 @@ textarea[name=echo],input[name=echo]{
     margin-top: 0;
     padding: 5px 0px 5px 0px;
     text-align: center;
+	}
+	.col-30, .col-70 {
+    width: 100%;
+    margin-top: 0;
+    padding: 5px 0px 5px 0px;
   }
 }
 
@@ -624,24 +632,12 @@ textarea[name=echo],input[name=echo]{
 .backhoax{
 	background-color: #fefe99;
 }
-.btnedit1{
-	visibility: visible;
-	opacity: 1;
-	padding-top: 10px;
-}
-.btnedit1.hidden{
-	visibility: hidden;
-	opacity: 0;
-	display: none; 
-}
+
 .btnedit2{
-	visibility: hidden;
-	opacity: 0;
-}
-.btnedit2.active{
 	visibility: visible;
 	opacity: 1;
 }
+
 
 
 
