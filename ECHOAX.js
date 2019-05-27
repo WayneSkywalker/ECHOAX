@@ -14,7 +14,7 @@ const app = express();
 
 /* MongoDB */
 // connect
-mongoose.connect("mongodb://localhost/ECHOAX");
+mongoose.connect("mongodb://localhost/echoax");
 let db = mongoose.connection;
 // connection check
 db.once("open", function(){
@@ -110,19 +110,53 @@ app.post("/register", function (req, res) {
     let location = req.body.location;
     let bio = req.body.bio;
 
+    // check if username has already existed.
+    // function validateUsernameAccessibility(username){
+    //     return member.findOne({username: username}).then(function(result){
+    //         return result === null;
+    //     });
+    // }
+    // let checkUsername = validateUsernameAccessibility(username).then(function(valid){
+    //     if(!valid){
+    //         return member.findOne({username: username}).then(function(){
+    //             return member.username;
+    //         });
+    //     }
+    // });
+    // check if E-mail has already existed.
+    function validateEmailAccessibility(email){
+        return member.findOne({ email: email }).then(function(result){
+            return result === null;
+        });
+    }
+    // let checkEmail = validateEmailAccessibility(email).then(function(valid){
+    //     if(!valid){
+    //         return member.findOne({email: email}).then(function(){
+    //             return member.email;
+    //         });
+    //     }
+    // });
+    validateEmailAccessibility(email).then(function (valid) {
+        if (valid) {
+            console.log(valid);
+            console.log("Email is valid");
+        } else {
+            console.log(valid)
+            console.log("Email already used");
+        }
+    });
+
     req.checkBody('username', 'Username is required.').notEmpty();
-    //req.checkBody('username', 'Username has already existed.').equals(member.findOne({ username: username }));
+    req.checkBody('username', 'Username has already existed.').equals(checkUsername);
     req.checkBody('email', 'E-mail is required.').notEmpty();
     req.checkBody('email', 'E-mail is not valid.').isEmail();
-    //req.checkBody('email', 'E-mail has already existed.').equals(member.findOne({ email: email }));
+    req.checkBody('email', 'E-mail has already existed.').equals(checkEmail);
     req.checkBody('password', 'Password is required.').notEmpty();
-    req.checkBody('password', 'Password must be least 8 characters long.').isLength({ min: 8 });
+    req.checkBody('password', 'Password must be least 6 characters long.').isLength({ min: 6 });
     req.checkBody('confirm_password', 'Please confirm your password.').notEmpty();
-    req.checkBody('confirm_password', 'Passwords do not match.').equals(req.body.pwd);
+    req.checkBody('confirm_password', 'Passwords do not match.').equals(req.body.password);
     req.checkBody('firstname', 'Firstname is required.').notEmpty();
-    //req.checkBody('firstname', 'Firstname has already existed.').equals(member.findOne({ firstname: firstname }));
     req.checkBody('lastname', 'Lastname is required.').notEmpty();
-    //req.checkBody('lastname', 'Lastname has already existed.').equals(member.findOne({ lastname: lastname }));
     req.checkBody('gender', 'Gender is required.').notEmpty();
     req.checkBody('birthdate', 'Birthdate is required.').notEmpty();
 
@@ -155,101 +189,13 @@ app.post("/register", function (req, res) {
                         console.log(err);
                         return;
                     } else {
-                        res.flash("success","You are now registered and can log in.")
+                        //res.flash("success","You are now registered and can log in.")
                         res.redirect("/main");
                     }
                 });
             });
         });
     }
-    // const { username,email,password,repassword,firstname,lastname,gender,birthdate,location,bio } = req.body;
-    // let errors = [];
-    // if(!username){
-    //     errors.push({ msg: 'Username is required.' });
-    // }
-    // if(!email){
-    //     errors.push({ msg: 'E-mail is required.' });
-    // }
-    // if(!password){
-    //     errors.push({ msg: 'Password is required.' });
-    // }
-    // if(!repassword){
-    //     errors.push({ msg: 'Please confirm your password.' });
-    // }
-    // if(!firstname){
-    //     errors.push({ msg: 'Firstname is required.' });
-    // }
-    // if(!lastname){
-    //     errors.push({ msg: 'Lastname is required.' });
-    // }
-    // if(!gender){
-    //     errors.push({ msg: 'Please choose your gender.' });
-    // }
-    // if(!birthdate){
-    //     errors.push({ msg: 'Please choose your birthdate.' });
-    // }
-    // // if(!validator.isEmail(email)){
-    // //     errors.push({ msg: 'E-mail is not valid.' });
-    // // }
-    // if(password.length < 8){
-    //     errors.push({ msg: 'Password must be least 8 characters long.' });
-    // }
-    // if(password !== repassword){
-    //     errors.push({ msg: 'Passwords do not match.' });
-    // }
-    // if(errors.length > 0){
-    //     res.render("signup",{
-    //         errors,
-    //         username,
-    //         email,
-    //         password,
-    //         repassword,
-    //         firstname,
-    //         lastname
-    //     });
-    // } else {
-    //     member.findOne({email: email}).then(member => {
-    //         if(member){
-    //             errors.push({ msg: 'E-mail already exists.' });
-    //             res.render("signup", {
-    //                 errors,
-    //                 username,
-    //                 email,
-    //                 password,
-    //                 repassword,
-    //                 firstname,
-    //                 lastname
-    //             });
-    //         } else {
-    //             const newMember = new member({
-    //                 username,
-    //                 password,
-    //                 email,
-    //                 firstname,
-    //                 lastname,
-    //                 gender,
-    //                 birthdate,
-    //                 location,
-    //                 bio
-    //             });
-    //             bcrypt.genSalt(10, (err,salt) => {
-    //                 bcrypt.hash(newMember.password, salt, (err,hash) => {
-    //                     if(err) throw err;
-    //                     newMember.password = hash;
-    //                     newMember.save()
-    //                         .then(member => {
-    //                             req.flash(
-    //                                 'success_msg',
-    //                                 'Succesful registered and you can log in.'
-    //                             );
-    //                             res.redirect("/main");
-    //                         })
-    //                         .catch(err => console.log(err));
-    //                 });
-    //             });
-    //         }
-    //     });
-    // }
 });
 
 /* category */
