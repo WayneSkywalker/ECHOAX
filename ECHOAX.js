@@ -1,30 +1,69 @@
 const express = require('express'),
     bodyParser = require('body-parser'),
-    cookieParser = require('cookie-parser'), //
+    //cookieParser = require('cookie-parser'), 
     mongoose = require('mongoose'),
-    passport = require('passport'), //
-    validator = require('express-validator'), //
-    session = require('express-session'), //
-    localStrategy = require('passport-local'), //
-    bcrypt = require('bcryptjs'); //
+    passport = require('passport'), 
+    validator = require('express-validator'), 
+    session = require('express-session'),
+    flash = require('connect-flash'),
+    localStrategy = require('passport-local'), 
+    bcrypt = require('bcryptjs'); 
     member = require('./models/member'),
     news = require('./models/news');
 const app = express();
 
+/* MongoDB */
+// connect
 mongoose.connect("mongodb://localhost/ECHOAX");
+let db = mongoose.connection;
+// connection check
+db.once("open", function(){
+    console.log("Connected to MongoDB");
+});
+// error check
+db.on("error", function(){
+    console.log(err);
+});
 
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(validator());
-app.use(cookieParser());
+// app.use(validator());
+// app.use(cookieParser());
 // app.set('trust proxy', 1) // trust first proxy
+
+/* express-session */
 app.use(session({
     secret: 'echoax',
     resave: false,
     saveUninitialized: true,
     cookie: { secure: true }
 }));
+
+/* express-messages */
+app.use(require('connect-flash')());
+app.use(function (req, res, next) {
+    res.locals.messages = require('express-messages')(req, res);
+    next();
+});
+
+/* express-validator */
+app.use(validator({
+    errorFormatter: function(param, msg, value){
+        let namespace = param.split('.'),
+        root = namespace.shift(),
+        formParam = root;
+        while(namespace.length){
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param: formParam,
+            msg: msg,
+            value: value
+        };
+    }
+}));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -60,16 +99,16 @@ app.get("/signup", function (req, res) {
 });
 app.post("/register", function (req, res) {
     //create account
-    let username = req.params.username;
-    let email = req.params.email;
-    let password = req.params.pwd;
-    let password2 = req.params.repwd;
-    let firstname = req.params.firstname;
-    let lastname = req.params.lastname;
-    let gender = req.params.gender;
-    let birthdate = req.params.birthdate;
-    let location = req.params.location;
-    let bio = req.params.bio;
+    let username = req.body.username;
+    let email = req.body.email;
+    let password = req.body.pwd;
+    let password2 = req.body.repwd;
+    let firstname = req.body.firstname;
+    let lastname = req.body.lastname;
+    let gender = req.body.gender;
+    let birthdate = req.body.birthdate;
+    let location = req.body.location;
+    let bio = req.body.bio;
 
     req.checkBody('username', 'Username is required.').notEmpty();
     req.checkBody('username', 'Username has already existed.').equals(member.findOne({ username: username }));
@@ -88,10 +127,10 @@ app.post("/register", function (req, res) {
     req.checkBody('birthdate', 'Birthdate is required.').notEmpty();
 
     let errors = req.validationError();
+
     if (errors) {
-        console.log(errors);
-        res.render("signup");
-        //res.render("signup",{errors: errors});
+        //res.render("signup");
+        res.render("signup",{errors: errors});
     } else {
         let newMember = new member({
             username: username,
@@ -115,12 +154,101 @@ app.post("/register", function (req, res) {
                         console.log(err);
                         return;
                     } else {
+                        res.flash("success","You are now registered and can log in.")
                         res.redirect("/main");
                     }
                 });
             });
         });
     }
+    // const { username,email,password,repassword,firstname,lastname,gender,birthdate,location,bio } = req.body;
+    // let errors = [];
+    // if(!username){
+    //     errors.push({ msg: 'Username is required.' });
+    // }
+    // if(!email){
+    //     errors.push({ msg: 'E-mail is required.' });
+    // }
+    // if(!password){
+    //     errors.push({ msg: 'Password is required.' });
+    // }
+    // if(!repassword){
+    //     errors.push({ msg: 'Please confirm your password.' });
+    // }
+    // if(!firstname){
+    //     errors.push({ msg: 'Firstname is required.' });
+    // }
+    // if(!lastname){
+    //     errors.push({ msg: 'Lastname is required.' });
+    // }
+    // if(!gender){
+    //     errors.push({ msg: 'Please choose your gender.' });
+    // }
+    // if(!birthdate){
+    //     errors.push({ msg: 'Please choose your birthdate.' });
+    // }
+    // // if(!validator.isEmail(email)){
+    // //     errors.push({ msg: 'E-mail is not valid.' });
+    // // }
+    // if(password.length < 8){
+    //     errors.push({ msg: 'Password must be least 8 characters long.' });
+    // }
+    // if(password !== repassword){
+    //     errors.push({ msg: 'Passwords do not match.' });
+    // }
+    // if(errors.length > 0){
+    //     res.render("signup",{
+    //         errors,
+    //         username,
+    //         email,
+    //         password,
+    //         repassword,
+    //         firstname,
+    //         lastname
+    //     });
+    // } else {
+    //     member.findOne({email: email}).then(member => {
+    //         if(member){
+    //             errors.push({ msg: 'E-mail already exists.' });
+    //             res.render("signup", {
+    //                 errors,
+    //                 username,
+    //                 email,
+    //                 password,
+    //                 repassword,
+    //                 firstname,
+    //                 lastname
+    //             });
+    //         } else {
+    //             const newMember = new member({
+    //                 username,
+    //                 password,
+    //                 email,
+    //                 firstname,
+    //                 lastname,
+    //                 gender,
+    //                 birthdate,
+    //                 location,
+    //                 bio
+    //             });
+    //             bcrypt.genSalt(10, (err,salt) => {
+    //                 bcrypt.hash(newMember.password, salt, (err,hash) => {
+    //                     if(err) throw err;
+    //                     newMember.password = hash;
+    //                     newMember.save()
+    //                         .then(member => {
+    //                             req.flash(
+    //                                 'success_msg',
+    //                                 'Succesful registered and you can log in.'
+    //                             );
+    //                             res.redirect("/main");
+    //                         })
+    //                         .catch(err => console.log(err));
+    //                 });
+    //             });
+    //         }
+    //     });
+    // }
 });
 
 /* category */

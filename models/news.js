@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 let NewsSchema = new mongoose.Schema({
-    topic: {
+    title: {
         type: String,
         required: true
     },
@@ -9,7 +9,11 @@ let NewsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    subCategory: String,
+    //subCategory: String,
+    subCategory: {
+        type: String,
+        required: true
+    },
     // news_pic: {
     //     type: String     
     // },
@@ -51,4 +55,4 @@ let NewsSchema = new mongoose.Schema({
         default: 0
     }
 });
-let news = mongoose.model("news",NewsSchema);
+let news = module.exports = mongoose.model("news",NewsSchema);
