@@ -1,4 +1,4 @@
-@font-face {
+@font-face { /*Fonts*/
     font-family: 'arca_majora_3bold';
     src: url('arcamajora3-bold-webfont.woff2') format('woff2'),
          url('arcamajora3-bold-webfont.woff') format('woff');
@@ -13,20 +13,21 @@ a, a:hover{
 	text-decoration: none;
 	color: inherit;
 }
+/*css for Background*/
 .bg{
     	background-repeat: no-repeat;
       	background-position: center center;
       	background-size: 100% 100%;
       	background-attachment: fixed;
     }
-.bgmain{
+.bgmain{ /*used in main.html*/
     	background-image:url(https://i.imgur.com/glax40v.png),url(https://i.imgur.com/TwdywdI.jpg);
     	background-repeat: no-repeat;
       	background-size: contain,cover;
       	background-position: center;
       	height: 100%;
     }
-.bgus{
+.bgus{ /*used in aboutus.html and BG-Login.html*/
     	background-image:url(https://i.imgur.com/TwdywdI.jpg);
     	background-repeat: no-repeat;
       	background-size: cover;
@@ -53,7 +54,7 @@ body{
 	margin-left: 5vw;
 }
 
-.centered {
+.centered { /*Center element in page*/
   position: absolute;
   top: 50%;
   left: 50%;
@@ -96,6 +97,7 @@ body{
 	font-size: 50px;
 	padding: 1% 1% 1% 1%;
 }
+/*css for card box in category*/
 .cardbox{
 	border-style: none;
 	font-size: 30px;
@@ -117,6 +119,7 @@ body{
 .cardbox:hover{
 	cursor: pointer;
 }
+/*Color for alphabet*/
 .w{
 	color:white;
 }
@@ -126,6 +129,7 @@ body{
 .p{
 	color: #b1b1ff;
 }
+/*Css for searchbar*/
 ul.navbar-nav li a.nav-link{
 	transform: scale(1);
 	transition: 0.5s;
@@ -137,6 +141,7 @@ ul.navbar-nav li a.nav-link.hide-item{
 #search:hover,#searchbtn:hover{
 	cursor: pointer;;
 }
+/*Searchbar*/
 .search-form{
 	position: absolute;
 	top: 25%;
@@ -171,7 +176,7 @@ ul.navbar-nav li a.nav-link.hide-item{
 }
 .search-topic input{
 	width: 100%;
-	padding: 3vh 3vh 3vh 1vh;
+	padding: 2vh 2vh 2vh 1vh;
 	background-color: white;
 	color: black;
 	border: none;
@@ -319,7 +324,7 @@ n 	{
 	}
 m 	{
 	line-height: 1;}
-input[name='edit']{
+	input[name='edit']{
 	font-size: 10px;
 	width: 50%;
 	border-radius: 5px;
@@ -339,7 +344,6 @@ input[name='edit']{
   padding: 14px 16px;
   transition: 0.3s;
 }
-
 .tab button:hover {
   background-color: #ddd;
 }
@@ -389,6 +393,44 @@ textarea[name=echo],input[name=echo]{
 	width : 200px ;
 	height : 200px;
 }
+/*Button*/
+.btnedit2{
+	visibility: visible;
+	opacity: 1;
+}
+.greenbtn{
+	border-radius: 6px;
+	margin: 5px;
+	padding: 10px;
+	border: none;
+	background-color: green;
+}
+.redbtn{
+	border-radius: 6px;
+	margin: 5px;
+	padding: 10px;
+	border: none;
+	background-color: red;
+}
+.yelbtn{
+	border-radius: 6px;
+	margin: 5px;
+	padding: 10px;
+	border: none;
+	background-color: yellow;
+}
+/*Background*/
+.backphish{	/*used for background in phishing*/
+	background-color: #ffa6a6;
+}
+.backp{	/*used for background in fake new*/
+	background-color: #b1b1ff;
+}
+.backhoax{	/*used for background in hoax*/
+	background-color: #fefe99;
+}
+
+/*All Columns*/
 .col-25 {
   float: left;
   width: 25%;
@@ -399,7 +441,6 @@ textarea[name=echo],input[name=echo]{
   width: 75%;
   margin-top: 6px;
 }
-
 .col-30 {
   float: left;
   width: 30%;
@@ -478,7 +519,8 @@ textarea[name=echo],input[name=echo]{
     font-size: 50px;
 	}
 	.picphish{
-		width: 100%;
+		width: 50%;
+		margin: auto;
 	}
 	#headn{
 		margin: 0%;
@@ -524,10 +566,8 @@ textarea[name=echo],input[name=echo]{
     width: 100%;
 		margin: 0% 3% 0% 3%;
 	}
+}	
 }
-	
-}
-
 @media only screen and (max-width: 370px){
   #headca{
   	font-size: 8vh;
@@ -541,6 +581,9 @@ textarea[name=echo],input[name=echo]{
 	width: 33%;
 	flex: 0 0 33.333333333%;
 	position:relative;
+	}
+	#rad{
+		display: none;
 	}
 }
 @media only screen and (min-width: 1024px) and (orientation : landscape){
@@ -599,43 +642,6 @@ textarea[name=echo],input[name=echo]{
     margin-top: 0;
     padding: 5px 0px 5px 0px;
   }
-}
-
-.greenbtn{
-	border-radius: 6px;
-	margin: 5px;
-	padding: 10px;
-	border: none;
-	background-color: green;
-}
-.redbtn{
-	border-radius: 6px;
-	margin: 5px;
-	padding: 10px;
-	border: none;
-	background-color: red;
-}
-.yelbtn{
-	border-radius: 6px;
-	margin: 5px;
-	padding: 10px;
-	border: none;
-	background-color: yellow;
-
-}
-.backphish{
-	background-color: #ffa6a6;
-}
-.backp{
-	background-color: #b1b1ff;
-}
-.backhoax{
-	background-color: #fefe99;
-}
-
-.btnedit2{
-	visibility: visible;
-	opacity: 1;
 }
 
 
