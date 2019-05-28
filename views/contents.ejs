@@ -1,7 +1,47 @@
 <% include ./partials/header %>
     <title><%= category %> - <%= subcategory %></title>
 </head>
-<% if(category==='fakenews'){ %> <body background="https://i.imgur.com/MjBOCeH.png" class="bg"> <% } else { %> <body background="https://i.imgur.com/ZnzXwZT.png" class="bg"> <% } %>
+<% if(category ==='fakenews'){ %> <body background="https://i.imgur.com/MjBOCeH.png" class="bg"> <% } else { %> <body background="https://i.imgur.com/ZnzXwZT.png" class="bg"> <% } %>
     <% include ./partials/navbar %>
     <!-- unfinished -->
+    <div class="container-fluid">
+        <div class="row no-gutters">
+            <a href="politic1.html" class="col-33card">
+                <div class="card backp">
+                    <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
+                    <div class="container">
+                        <div class="ntopic">TOPIC1</div>
+                        <div class="ndes">DESCRIPTION OF TOPIC1</div>
+                        <div class="ndt">BY ADMIN</div>
+                        <div class="ndt">POSTED 00 XXXXXXXXX 0000</div>
+                        <div style="float: right;"><input type="button" name="vote" value="YES"> 00000 <input type="button" name="vote" value="NO"> 00000 </div>
+                    </div>
+                </div>
+            </a>
+            <a href="politic1.html" class="col-33card">
+                <div class="card backp">
+                    <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
+                    <div class="container">
+                        <div class="ntopic">TOPIC1</div>
+                        <div class="ndes">DESCRIPTION OF TOPIC1</div>
+                        <div class="ndt">BY ADMIN</div>
+                        <div class="ndt">POSTED 00 XXXXXXXXX 0000</div>
+                        <div style="float: right;"><input type="button" name="vote" value="YES"> 00000 <input type="button" name="vote" value="NO"> 00000 </div>
+                    </div>
+                </div>
+            </a>
+            <a href="politic1.html" class="col-33card">
+                <div class="card backp">
+                    <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
+                    <div class="container">
+                        <div class="ntopic">TOPIC1</div>
+                        <div class="ndes">DESCRIPTION OF TOPIC1</div>
+                        <div class="ndt">BY ADMIN</div>
+                        <div class="ndt">POSTED 00 XXXXXXXXX 0000</div>
+                        <div style="float: right;"><input type="button" name="vote" value="YES"> 00000 <input type="button" name="vote" value="NO"> 00000 </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
 <% include ./partials/footer %>

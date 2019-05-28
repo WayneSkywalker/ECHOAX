@@ -69,6 +69,14 @@ body{
 	font-size: 150px;
 	width: 100%;
 }
+#login {
+	display: inline;
+	background-color:black;
+	position:fixed;
+	top:50%;
+	left:50%;
+	transform: translate(-50%,-50%);
+}
 #log{
 	border-style: none;
 	background-color: white;

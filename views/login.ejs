@@ -1,0 +1,19 @@
+<% include ./partials/header %>
+    <title>ECHOAX - Log in</title>
+</head>
+<body class="bgus">
+    <% include ./partials/navbar %>
+    <div id="login">
+        <form action="login" method="POST">
+            <div class="form-group">
+                <label for="user" class="w">USERNAME</label>
+                <input type="text" class="form-control" name="username" placeholder="Username" required="required">
+            </div>
+            <div class="form-group">
+                <label for="password" class="w">PASSWORD</label>
+                <input type="password" class="form-control" name="password" placeholder="Password" required="required">
+            </div>
+            <center><input type="submit" class="greenbtn w" value="LOG IN"></center>
+        </form>
+    </div>
+<% include ./partials/footer %>

@@ -1,20 +1,20 @@
 <% include ./partials/header %>
-    <title>ECHOAX - ECHO</title>
+<title>ECHOAX - ECHO</title>
 </head>
-<body background="https://i.imgur.com/gaFKvWi.png" class="bg" >
+
+<body background="https://i.imgur.com/gaFKvWi.png" class="bg">
     <% include ./partials/navbar %>
     <center class="w" style="font-size: 30px; ">
         <d style="color: red">ECHO</d> : SEND TO SHARE SOME LIES TO OTHER
     </center>
     <div class="container echo">
-        <form action="action_page.php">
-    
+        <form action="echo" method="POST">
             <div class="row">
                 <div class="col-30">
                     <label for="topic">TOPIC</label>
                 </div>
                 <div class="col-70">
-                    <input type="text" name="echo" placeholder="" required maxlength="50">
+                    <input type="text" name="title" placeholder="" required maxlength="50">
                 </div>
             </div>
             <div class="row">
@@ -22,14 +22,21 @@
                     <label for="category">CATEGORY</label>
                 </div>
                 <div class="col-70">
-                    <input type="radio" name="gender" required>FAKE NEWS
-                    <input type="radio" name="gender" required>HOAX
-                    <input type="radio" name="gender" required>PHISHING
+                    <input type="radio" name="category" value="fakenews" required>FAKE NEWS&emsp;<br id="rad">
+                    <input type="radio" name="category" value="hoax" required>HOAX&emsp;<br id="rad">
+                    <input type="radio" name="category" value="phishing" required>PHISHING&emsp;<br id="rad">
+                    <input list="cate" name="subcategory" value="">
+                    <datalist id="cate">
+                        <option value="politics">
+                        <option value="economic">
+                        <option value="crime">
+                        <option value="health">
+                    </datalist>
                 </div>
             </div>
             <div class="row">
                 <div class="col-30">
-                    <label for="desc">DESCRIPTION</label>
+                    <label for="desc">CONTENT</label>
                 </div>
                 <div class="col-70">
                     <textarea name="echo" placeholder="Write something.." style="height:200px"></textarea>
@@ -48,19 +55,19 @@
                     <label for="REFERENCE">REFERENCE</label>
                 </div>
                 <div class="col-70">
-                    <input type="text" name="echo" placeholder="" required>
+                    <input type="text" name="ref1" placeholder="" required>
                 </div>
             </div>
             <div class="row">
                 <div class="col-30"></div>
                 <div class="col-70">
-                    <input type="text" name="echo" placeholder="" required>
+                    <input type="text" name="ref2" placeholder="">
                 </div>
             </div>
             <center style="padding-top: 10px;">
                 <button type="submit" class="greenbtn w" name="sendbtn">SEND</button>
-                <button type="button" class="redbtn w" name="cancelbtn">CANCEL</button>
+                <button type="button" class="redbtn w" name="cancelbtn" value="profile">CANCEL</button>
             </center>
         </form>
     </div>
-<% include ./partials/footer %>
+    <% include ./partials/footer %>

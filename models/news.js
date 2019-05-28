@@ -17,10 +17,7 @@ let NewsSchema = new mongoose.Schema({
     // news_pic: {
     //     type: String     
     // },
-    des: {
-        type: String,
-        required: true
-    },
+    des: String,
     content: {
         type: String,
         required: true
@@ -38,10 +35,7 @@ let NewsSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    date_posted: {
-        type: Date,
-        default: Date.now
-    },
+    date_posted: Date,
     status: {
         type: String,
         default: 'wait',
