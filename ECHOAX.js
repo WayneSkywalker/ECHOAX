@@ -224,16 +224,21 @@ app.get("/popular", function (req, res) {
 // main search
 app.post("/mainsearch", function(req,res){      //unfinished    not complete
     let search = req.body.mainsearch;
-    member.find({title: search}).then(function(result){
-        if(result){
-            console.log(result);
-            res.redirect("/"); //redirect somewhere
+    member.find({title: search}, function (err, findNews) {
+        if (err) {
+            console.log(err);
+        } else if(findNews) {
+            console.log(findNews);
+            res.redirect("/search");
         } else {
-            console.log("ERROR!");
+            console.log("NO");
+            res.redirect("/");
+            //res.redirect("/notfound");
         }
-    }).catch(function(err) {
-        console.log(err);
-    })
+    });
+});
+app.get("search", function(req,res){
+    res.render("search");
 });
 //fake news search
 app.post("/fakenewssearch", function (req, res) {  //unfinished    not complete
