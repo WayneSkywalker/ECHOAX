@@ -11,7 +11,7 @@
     <!-- search -->
         <% if(category === 'fakenews'){%>
             <div>
-                <form class="search-topic" action="fakenewssearch" style="display: inline;">
+                <form class="search-topic" action="/fakenewssearch" style="display: inline;" method="POST" >
                     <input type="text" name="fakenewssearch" placeholder="SEARCH" style="width:90%">&nbsp;<i class="fas fa-times w" id="1"></i>
                 </form>
                 <div id="fake" class="topic">
@@ -20,7 +20,7 @@
             </div>
         <% } else { %>
             <div>
-                <form class="search-topic" action="hoaxsearch" style="display: inline;">
+                <form class="search-topic" action="/hoaxsearch" style="display: inline;" method="POST" >
                     <input type="text" name="hoaxsearch" placeholder="SEARCH" style="width:90%">&nbsp;<i class="fas fa-times w" id="1"></i>
                 </form>
                 <div id="hoax" class="topic">
@@ -34,21 +34,21 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-4  col-12">
-                <a href="fakenews/politics">
+                <a href="/fakenews/politics">
                     <div class="card cardbox " id="fakecard">
                         <center>POLITICS</center>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4  col-12">
-                <a href="fakenews/economics">
+                <a href="/fakenews/economics">
                     <div class="card cardbox " id="fakecard">
                         <center>ECONOMICS</center>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4  col-12">
-                <a href="fakenews/crime">
+                <a href="/fakenews/crime">
                     <div class="card cardbox " id="fakecard">
                         <center>CRIME</center>
                     </div>
@@ -59,23 +59,23 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-4  col-12">
-                <a href="fakenews/health">
+                <a href="/fakenews/politics">
                     <div class="card cardbox " id="fakecard">
-                        <center>HEALTH</center>
+                        <center>POLITICS</center>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4  col-12">
-                <a href="fakenews/technology">
+                <a href="/fakenews/economics">
                     <div class="card cardbox " id="fakecard">
-                        <center>TECHNOLOGY</center>
+                        <center>ECONOMICS</center>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4  col-12">
-                <a href="fakenews/sport">
+                <a href="/fakenews/crime">
                     <div class="card cardbox " id="fakecard">
-                        <center>SPORT</center>
+                        <center>CRIME</center>
                     </div>
                 </a>
             </div>
@@ -84,23 +84,23 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-4  col-12">
-                <a href="fakenews/entertainment">
+                <a href="/fakenews/politics">
                     <div class="card cardbox " id="fakecard">
-                        <center>ENTERTAINMENT</center>
+                        <center>POLITICS</center>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4  col-12">
-                <a href="fakenews/education">
+                <a href="/fakenews/economics">
                     <div class="card cardbox " id="fakecard">
-                        <center>EDUCATION</center>
+                        <center>ECONOMICS</center>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4  col-12">
-                <a href="fakenews/science">
+                <a href="/fakenews/crime">
                     <div class="card cardbox " id="fakecard">
-                        <center>SCIENCE</center>
+                        <center>CRIME</center>
                     </div>
                 </a>
             </div>
@@ -110,21 +110,21 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-4  col-12">
-                <a href="hoax/aprilfoolsday">
+                <a href="/hoax/aprilfoolsday">
                     <div class="card cardbox" id="hoaxcard">
                         <center>APRIL FOOL'S DAY</center>
                     </div>
                 </a>    
             </div>
             <div class="col-lg-4  col-12">
-                <a href="hoax/science">
+                <a href="/hoax/science">
                     <div class="card cardbox" id="hoaxcard">
                         <center>SCIENCE</center>
                     </div>
                 </a>    
             </div>
             <div class="col-lg-4  col-12">
-                <a href="hoax/health">
+                <a href="/hoax/health">
                     <div class="card cardbox" id="hoaxcard">
                         <center>HEALTH</center>
                     </div>
@@ -136,21 +136,21 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-4  col-12">
-                <a href="hoax/science">
+                <a href="/hoax/science">
                     <div class="card cardbox" id="hoaxcard">
                         <center>SCIENCE</center>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4  col-12">
-                <a href="hoax/science">
+                <a href="/hoax/science">
                     <div class="card cardbox" id="hoaxcard">
                         <center>SCIENCE</center>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4  col-12">
-                <a href="hoax/science">
+                <a href="/hoax/science">
                     <div class="card cardbox" id="hoaxcard">
                         <center>SCIENCE</center>
                     </div>
@@ -162,21 +162,21 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-4  col-12">
-                <a href="hoax/science">
+                <a href="/hoax/science">
                     <div class="card cardbox" id="hoaxcard">
                         <center>SCIENCE</center>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4  col-12">
-                <a href="hoax/science">
+                <a href="/hoax/science">
                     <div class="card cardbox" id="hoaxcard">
                         <center>SCIENCE</center>
                     </div>
                 </a>
             </div>
             <div class="col-lg-4  col-12">
-                <a href="hoax/science">
+                <a href="/hoax/science">
                     <div class="card cardbox" id="hoaxcard">
                         <center>SCIENCE</center>
                     </div>

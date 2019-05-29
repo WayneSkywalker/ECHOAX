@@ -204,19 +204,109 @@ app.get("/logout", function (req, res) {
     res.redirect("/login");
 });
 
-//user's part
+/* user's profile */
 app.get("/profile/:id"/*, ensureAuthenticated*/, function (req, res) {          //unfinished
     member.findById(req.params.id, function (err, member) {
         if (err) {
             console.log(err);
         } else {
-            console.log(member);
+            //console.log(member);
             res.render("profile", { member: member });
         }
     });
 });
-app.get("/editprofile/:id", ensureAuthenticated, function (req, res) {   //unfinished
-    res.render("edit");
+/* edit user's profile */
+app.get("/editprofile/:id"/*, ensureAuthenticated*/, function (req, res) {   //unfinished
+    member.findById(req.params.id, function(err, member){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("edit",{member: member});
+        }
+    });
+});
+app.post("/editprofile/:id", function(req,res){
+    let oldpassword = req.body.oldpassword;
+    let newpassword = req.body.newpassword;
+    let renewpassword = req.body.renewpassword;
+    let firstname = req.body.firstname;
+    let lastname = req.body.lastname;
+    let location = req.body.location;
+    let bio = req.body.bio;
+
+    let query = {_id: req.params.id};
+
+    member.findById(req.params.id, function(err,members){
+        if(err){
+            console.log(err);
+        } else {
+            console.log(members);
+            if(!oldpassword){
+                oldpassword = members.password;
+                console.log(oldpassword);
+            } else {
+                bcrypt.genSalt(10, function (err, salt) {
+                    bcrypt.hash(oldpassword, salt, function (err, hash) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        oldpassword = hash;
+                        console.log(oldpassword);
+                    });
+                });
+            }
+            if(!firstname){
+                firstname = members.firstname;
+            }
+            if(!lastname){
+                lastname = members.lastname;
+            }
+            if(oldpassword === members.password){
+                if(newpassword === renewpassword){
+                    bcrypt.genSalt(10, function (err, salt) {
+                        bcrypt.hash(newpassword, salt, function (err, hash) {
+                            if (err) {
+                                console.log(err);
+                            }
+                            newpassword = hash;
+                            console.log(newpassword);
+                            console.log("newpassword");
+                            let mem = {};
+                            mem.username = members.username;
+                            mem.password = newpassword;
+                            mem.email = members.email;
+                            mem.firstname = firstname;
+                            mem.lastname = lastname;
+                            mem.gender = members.gender;
+                            mem.birthdate = members.birthdate;
+                            mem.location = location;
+                            mem.bio = bio;
+                            mem.level = members.level;
+                            mem.fvote_yes = members.fvote_yes;
+                            mem.hvote_yes = members.hvote_yes;
+                            mem.fvote_no = members.fvote_no;
+                            mem.hvote_no = members.hvote_no;
+                            console.log(mem);
+                            member.update(query, mem, function (err) {
+                                if (err) {
+                                    console.log(err);
+                                    return;
+                                } else {
+                                    res.redirect("/profile"); //wrong route
+                                }
+                            });
+                        });
+                    });
+                } else {
+                    console.log("password not equal");
+                    res.redirect("/editprofile"); //wrong route
+                }
+            } else {
+                console.log("old password not correct.");
+                res.redirect("/editprofile");   //wrong route
+            }
+        }
+    });
 });
 //-----------------------------------------------------------------------------------------------------------------------------------------
 /* new */
@@ -351,19 +441,50 @@ app.post("/echo",function(req,res){
     })
 });
 
-//admin's part
+/* admin's part */
+// view users's requests
 app.get("/userrequest"/*, ensureAuthenticated*/ , function (req, res) {      //unfinished 
     news.find({ status: 'wait' }).then(function (findNews) {
         res.render("user_request",{news: findNews});
     });
     //res.render("user_request");
 });
+// view user's news
 app.get("/userecho/:id"/*, ensureAuthenticated*/, function (req, res) {         //unfinished
     news.findById(req.params.id, function(err,news){
         if(err){
             console.log(err);
         } else {
             res.render("user_echo",{news: news});
+        }
+    });
+});
+// grant post permission
+app.post("/postnews/:id", function(req,res){
+    let query = {_id: req.params.id};
+    news.findById(req.params.id, function(err,newss){
+        if(err){
+            console.log(err);
+        } else {
+            newss.status = 'posted';
+            news.update(query,newss, function(err){
+                if(err){
+                    console.log(err);
+                } else {
+                    res.redirect("/userrequest");
+                }
+            });
+        }
+    });
+});
+app.delete("/deletenews/:id", function(req,res){
+    let query = {_id: req.params.id};
+    news.remove(query, function(err){
+        if(err){
+            console.log(err);
+        } else {
+            console.log("DELETE!!");
+            res.render("success");
         }
     });
 });
@@ -394,7 +515,13 @@ app.get("/:category", function (req, res) {
     for (let i = 0; i < categories.length; i++) {
         if (category === categories[i]) {
             if ((category === 'fakenews') || (category === 'hoax')) res.render("category_sub", { category: category });
-            else res.render("phishing");
+            else {
+                news.find({ category: category, status: 'posted' }).then(function (findNews) {
+                    res.render("phishing", { news: findNews });
+                }).catch(function (err) {
+                    console.log(err);
+                });
+            }
         }
     }
 });
@@ -427,7 +554,8 @@ app.get("/:category/:subcategory", function (req, res) {
                         });
                     }
                 }
-            } else res.render("phishing");
+            }
+            //res.render("phishing");
         }
     }
 });

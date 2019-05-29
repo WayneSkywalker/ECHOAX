@@ -1,21 +1,35 @@
-$(document).ready(function(){
-	 $('#search').click(function(){
-	 	$('.nav-link').toggleClass('hide-item')
-		$('.search-form').toggleClass('active')
-	 })
-  
-  
-})
-$('#1').on('click', function (event){
-   $('.search-topic').removeClass('active');
-   $('.topic').removeClass('hide-item');
- });
+$(document).ready(function () {
+  $('#search').click(function () {
+    $('.nav-link').toggleClass('hide-item')
+    $('.search-form').toggleClass('active')
+  });
 
-$('#searchbtn').on('click', function (event){
-		$('.topic').addClass('hide-item')
-    $('.search-topic').addClass('active')
-    event.stopPropagation();
-    
+})
+$('#1').on('click', function (event) {
+  $('.search-topic').removeClass('active');
+  $('.topic').removeClass('hide-item');
+});
+
+$('.deletenews').on('click', function (event) {
+  $target = $(event.target);
+  const id = $target.attr('data-id');
+  $.ajax({
+    type:'DELETE',
+    url: '/deletenews/' + id,
+    success: function(res){
+      alert('Delete news');
+      window.location.href='/userrequest';
+    },
+    error: function(err){
+      console.log(err);
+    }
+  });
+});
+
+$('#searchbtn').on('click', function (event) {
+  $('.topic').addClass('hide-item')
+  $('.search-topic').addClass('active')
+  event.stopPropagation();
 })
 
 function opentab(evt, status) {

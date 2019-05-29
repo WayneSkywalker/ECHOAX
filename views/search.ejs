@@ -8,7 +8,7 @@
     </div>
     <% for(let i = 0;i < news.length; i++) { %>
         <div class="column">
-            <a href="news/<%= news[i].id %>" style="text-decoration: none;">
+            <a href="/news/<%= news[i].id %>" style="text-decoration: none;">
                 <% if(news[i].category ==='fakenews'){ %> 
                     <div class="card flex-row flex-wrap backp">
                 <% } else if(news[i].category ==='hoax'){ %> 

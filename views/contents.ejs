@@ -12,10 +12,10 @@
     <br>
     <div class="container-fluid">
         <% for(let i = 0;i < news.length ; i++){ %>
-            <% if(i%3===0){ %>
+            <% if(i%3===0){ %>0
                 <div class="row no-gutters">
             <% } %>
-                <a href="news/<%= news[i].id %>" class="col-33card">
+                <a href="/news/<%= news[i].id %>" class="col-33card">
                     <div class="card backp">
                         <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
                         <div class="container">
