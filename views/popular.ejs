@@ -11,45 +11,23 @@
     </div>
     <div class="container-fluid">
         <div class="row no-gutters">
-            <div class="col-33card">
-                <div class="card backp">
-                    <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
-                    <div class="container">
-                        <div class="ntopic">TOPIC1</div>
-                        <div class="ndes">DESCRIPTION OF TOPIC1</div>
-                        <div class="ndt">BY ADMIN</div>
-                        <div class="ndt">POSTED 00 XXXXXXXXX 0000</div>
-                        <div style="float: right;"><input type="button" name="vote" value="YES"> 00000 <input type="button"
-                                name="vote" value="NO"> 00000 </div>
-                    </div>
+            <% for(let i = 0;i < fakeNews.length ; i++ ){ %>
+                <div class="col-33card">
+                    <a href="news/<%= fakeNews[i].id %>">
+                        <div class="card backp">
+                            <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
+                            <div class="container">
+                                <div class="ntopic"><%= fakeNews[i].title %></div>
+                                <div class="ndes"><%= fakeNews[i].content.substring(0,45) + "..." %></div>
+                                <div class="ndt">BY <%= fakeNews[i].author %></div>
+                                <div class="ndt">POSTED ON <%= fakeNews[i].date_posted.toDateString() %></div>
+                                <div style="float: right;"><input type="button" name="vote" value="YES"> <%= fakeNews[i].voteYes %> <input
+                                        type="button" name="vote" value="NO"> <%= fakeNews[i].voteNo %> </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </div>
-            <div class="col-33card">
-                <div class="card backp">
-                    <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
-                    <div class="container">
-                        <div class="ntopic">TOPIC1</div>
-                        <div class="ndes">DESCRIPTION OF TOPIC1</div>
-                        <div class="ndt">BY ADMIN</div>
-                        <div class="ndt">POSTED 00 XXXXXXXXX 0000</div>
-                        <div style="float: right;"><input type="button" name="vote" value="YES"> 00000 <input type="button"
-                                name="vote" value="NO"> 00000 </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-33card">
-                <div class="card backp">
-                    <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
-                    <div class="container">
-                        <div class="ntopic">TOPIC1</div>
-                        <div class="ndes">DESCRIPTION OF TOPIC1</div>
-                        <div class="ndt">BY ADMIN</div>
-                        <div class="ndt">POSTED 00 XXXXXXXXX 0000</div>
-                        <div style="float: right;"><input type="button" name="vote" value="YES"> 00000 <input type="button"
-                                name="vote" value="NO"> 00000 </div>
-                    </div>
-                </div>
-            </div>
+            <% } %>
         </div>
     </div>
     <div class="container-fluid">
@@ -57,92 +35,47 @@
     </div>
     <div class="container-fluid">
         <div class="row no-gutters">
-            <div class="col-33card">
-                <div class="card backhoax">
-                    <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
-                    <div class="container">
-                        <div class="ntopic">TOPIC1</div>
-                        <div class="ndes">DESCRIPTION OF TOPIC1</div>
-                        <div class="ndt">BY ADMIN</div>
-                        <div class="ndt">POSTED 00 XXXXXXXXX 0000</div>
-                        <div style="float: right;"><input type="button" name="vote" value="YES"> 00000 <input type="button"
-                                name="vote" value="NO"> 00000 </div>
-                    </div>
+            <% for(let i = 0;i < hoax.length ; i++ ){ %>
+                <div class="col-33card">
+                    <a href="news/<%= hoax[i].id %>">
+                        <div class="card backhoax">
+                            <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
+                            <div class="container">
+                                <div class="ntopic"><%= hoax[i].title %></div>
+                                <div class="ndes"><%= hoax[i].content.substring(0,45) + "..." %></div>
+                                <div class="ndt">BY <%= hoax[i].author %></div>
+                                <div class="ndt">POSTED ON <%= hoax[i].date_posted.toDateString() %></div>
+                                <div style="float: right;"><input type="button" name="vote" value="YES"> <%= hoax[i].voteYes %>
+                                    <input type="button" name="vote" value="NO"> <%= hoax[i].voteNo %> </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </div>
-            <div class="col-33card">
-                <div class="card backhoax">
-                    <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
-                    <div class="container">
-                        <div class="ntopic">TOPIC1</div>
-                        <div class="ndes">DESCRIPTION OF TOPIC1</div>
-                        <div class="ndt">BY ADMIN</div>
-                        <div class="ndt">POSTED 00 XXXXXXXXX 0000</div>
-                        <div style="float: right;"><input type="button" name="vote" value="YES"> 00000 <input type="button"
-                                name="vote" value="NO"> 00000 </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-33card">
-                <div class="card backhoax">
-                    <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
-                    <div class="container">
-                        <div class="ntopic">TOPIC1</div>
-                        <div class="ndes">DESCRIPTION OF TOPIC1</div>
-                        <div class="ndt">BY ADMIN</div>
-                        <div class="ndt">POSTED 00 XXXXXXXXX 0000</div>
-                        <div style="float: right;"><input type="button" name="vote" value="YES"> 00000 <input type="button"
-                                name="vote" value="NO"> 00000 </div>
-                    </div>
-                </div>
-            </div>
+            <% } %>
         </div>
     </div>
-    
     <div class="container-fluid">
         <div id="headn">PHISHING</div>
     </div>
     <div class="container-fluid">
         <div class="row no-gutters">
-            <div class="col-33card">
-                <div class="card backphish">
-                    <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
-                    <div class="container">
-                        <div class="ntopic">TOPIC1</div>
-                        <div class="ndes">DESCRIPTION OF TOPIC1</div>
-                        <div class="ndt">BY ADMIN</div>
-                        <div class="ndt">POSTED 00 XXXXXXXXX 0000</div>
-                        <div style="float: right;"><input type="button" name="vote" value="YES"> 00000 <input type="button"
-                                name="vote" value="NO"> 00000 </div>
-                    </div>
+            <% for(let i = 0;i < phishing.length ; i++ ){ %>
+                <div class="col-33card">
+                    <a href="news/<%= phishing[i].id %>">
+                        <div class="card backphish">
+                            <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
+                            <div class="container">
+                                <div class="ntopic"><%= phishing[i].title %></div>
+                                <div class="ndes"><%= phishing[i].content.substring(0,45) + "..." %></div>
+                                <div class="ndt">BY <%= hoax[i].author %></div>
+                                <div class="ndt">POSTED ON <%= phishing[i].date_posted.toDateString() %></div>
+                                <div style="float: right;"><input type="button" name="vote" value="YES"> <%= phishing[i].voteYes %> <input
+                                        type="button" name="vote" value="NO"> <%= phishing[i].voteNo %> </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </div>
-            <div class="col-33card">
-                <div class="card backphish">
-                    <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
-                    <div class="container">
-                        <div class="ntopic">TOPIC1</div>
-                        <div class="ndes">DESCRIPTION OF TOPIC1</div>
-                        <div class="ndt">BY ADMIN</div>
-                        <div class="ndt">POSTED 00 XXXXXXXXX 0000</div>
-                        <div style="float: right;"><input type="button" name="vote" value="YES"> 00000 <input type="button"
-                                name="vote" value="NO"> 00000 </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-33card">
-                <div class="card backphish">
-                    <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
-                    <div class="container">
-                        <div class="ntopic">TOPIC1</div>
-                        <div class="ndes">DESCRIPTION OF TOPIC1</div>
-                        <div class="ndt">BY ADMIN</div>
-                        <div class="ndt">POSTED 00 XXXXXXXXX 0000</div>
-                        <div style="float: right;"><input type="button" name="vote" value="YES"> 00000 <input type="button"
-                                name="vote" value="NO"> 00000 </div>
-                    </div>
-                </div>
-            </div>
+            <% } %>
         </div>
     </div>
 <% include ./partials/footer %>

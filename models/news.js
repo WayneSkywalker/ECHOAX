@@ -17,7 +17,6 @@ let NewsSchema = new mongoose.Schema({
     // news_pic: {
     //     type: String     
     // },
-    des: String,
     content: {
         type: String,
         required: true

@@ -3,5 +3,11 @@
 </head>
 <body background="https://i.imgur.com/Fg7WsNm.png" class="bg">
     <% include ./partials/navbar %>
-    <h1>Not FOund!!</h1>
+    <div style="display: inline;  position:fixed; top:50%; left:50%; transform: translate(-50%,-50%); color:white; text-align:center;">
+        <g style="font-size: 5em">Oops!</g>
+        <h2>Page Not Found</h2>
+        <form>
+            <button onclick="history.back()" class="redbtn w">GO BACK</button>
+        </form>
+    </div>
 <% include ./partials/footer %>

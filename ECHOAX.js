@@ -68,6 +68,7 @@ app.use(passport.session());
 
 app.get("*", function(req,res,next){
     res.locals.member = req.member || null;
+    console.log(res.locals.member);
     next();
 });
 
@@ -204,20 +205,33 @@ app.get("/logout", function (req, res) {
 });
 
 //user's part
-app.get("/profile", function (req, res) {          //unfinished
+app.get("/profile/:id", ensureAuthenticated, function (req, res) {          //unfinished
     res.render("profile");
 });
-app.get("/editprofile", function (req, res) {   //unfinished
+app.get("/editprofile/:id", ensureAuthenticated, function (req, res) {   //unfinished
     res.render("edit");
 });
 //-----------------------------------------------------------------------------------------------------------------------------------------
 /* new */
 app.get("/new", function (req, res) {
-    res.render("new");
+    news.find({ category: 'fakenews', status: 'posted' }).sort({ date_posted: -1 }).limit(3).then(function (fakeNews) {
+        news.find({ category: 'hoax', status: 'posted' }).sort({ date_posted: -1 }).limit(3).then(function (hoax) {
+            news.find({ category: 'phishing', status: 'posted' }).sort({ date_posted: -1 }).limit(3).then(function (phishing) {
+                res.render("new", { fakeNews: fakeNews, hoax: hoax, phishing: phishing });
+            });
+        });
+    });
 });
 /* popular */
 app.get("/popular", function (req, res) {
-    res.render("popular");
+    news.find({ category: 'fakenews', status: 'posted' }).sort({ voteYes: -1 }).limit(3).then(function (fakeNews) {
+        news.find({ category: 'hoax', status: 'posted' }).sort({ voteYes: -1 }).limit(3).then(function (hoax) {
+            news.find({ category: 'phishing', status: 'posted' }).sort({ voteYes: -1 }).limit(3).then(function (phishing) {
+                res.render("popular", { fakeNews: fakeNews, hoax: hoax, phishing: phishing });
+            });
+        });
+    });
+    //res.render("popular");
 });
 
 /* search */
@@ -283,24 +297,25 @@ app.post("/phissearch", function (req, res) {      //unfinished    not complete
     });
 });
 
-/* news */
+/* single news */
 app.get("/news/:id", function (req, res) {     //unfinished
-    // let id = req.params.id;
-    // member.findById(id, function (err, foundNews) {
-    //     if (err) {
-    //         console.log(err);
-    //         res.redirect("/category");
-    //         //res.redirect("/notfound");
-    //     } else {
-    //         console.log(foundNews);
-    //         res.render("news", { news: foundNews });
-    //     }
-    // })
-    res.render("news");
+    member.findById(req.params.id, function (err, foundNews) {
+        member.findById(foundNews.author, function(err, member){
+            res.render("news",{news: foundNews});
+        });
+        // if (err) {
+        //     console.log(err);
+        //     res.redirect("/category");
+        //     //res.redirect("/notfound");
+        // } else {
+        //     console.log(foundNews);
+        //     res.render("news", { news: foundNews });
+        // }
+    });
 });
 
 /* create news */
-app.get("/echo", function (req, res) {          //unfinished
+app.get("/echo", ensureAuthenticated, function (req, res) {          //unfinished
     res.render("echo");
 });
 app.post("/echo",function(req,res){
@@ -309,8 +324,8 @@ app.post("/echo",function(req,res){
     echo.category = req.body.category;
     echo.subCategory = req.body.subcategory;
     //echo.author = req.body.author;
-    //echo.author = req.member;
-    echo.author = 'quay';
+    echo.author = req.member.username;
+    //echo.author = 'quay';
     echo.content = req.body.echo;
     echo.ref1 = req.body.ref1;
     echo.ref2 = req.body.ref2;
@@ -326,34 +341,41 @@ app.post("/echo",function(req,res){
 });
 
 //admin's part
-app.get("/userrequest", function (req, res) {      //unfinished query get something i don't know
-    member.find({status: 'wait'},function(err,foundNews){
-        if(err){
-            console.log("ERROR!");
-            console.log(err);
-        } else if(foundNews){
-            console.log("success!");
-            res.render("user_request", { foundNews: foundNews });
-        } else {
-            console.log("not found!");
-        }
+app.get("/userrequest"/*, ensureAuthenticated*/ , function (req, res) {      //unfinished 
+    news.find({ status: 'wait' }).then(function (findNews) {
+        console.log(findNews);
+        res.render("user_request",{news: findNews});
+    }).catch(function(err){
+        console.log(err);
     });
     //res.render("user_request");
 });
-app.get("/userecho/:id", function (req, res) {         //unfinished
-    // let id = req.params.id;
-    // member.findById(id, function (err, foundNews) {
-    //     if (err) {
-    //         console.log(err);
-    //         res.redirect("/category");
-    //         //res.redirect("/notfound");
-    //     } else {
-    //         console.log(foundNews);
-    //         res.render("news", { news: foundNews });
-    //     }
-    // })
-    res.render("user_echo");
+app.get("/userecho/:id"/*, ensureAuthenticated*/, function (req, res) {         //unfinished
+    member.findById(req.params.id, function (err, foundNews) {
+        member.findById(foundNews.author, function (err, member) {
+            res.render("user_echo", {
+                news: foundNews,
+                author: member.username
+            });
+        });
+    });
 });
+
+app.get("/notfound",function(req,res){
+    res.render("notfound");
+});
+app.get("/success",function(req,res){
+    res.render("success");
+});
+
+function ensureAuthenticated(req,res,next){
+    if(req.isAuthenticated()){
+        return next();
+    } else {
+        req.flash("danger","Please login");
+        res.redirect("/login");
+    }
+}
 
 /* category */
 app.get("/category", function (req, res) {
@@ -374,7 +396,7 @@ app.get("/:category/:subcategory", function (req, res) {    //unfinished    cann
     let category = req.params.category;
     let subcategory = req.params.subcategory;
     let categories = ['fakenews', 'hoax', 'phishing'];
-    let fakecate = ['politics', 'economics', 'crime','health','technology','sport','entertainment','education','science'];
+    let fakecate = ['politics', 'economics', 'crime'];
     let hoaxcate = ['aprilfoolsday', 'science', 'health'];
     for (let i = 0; i < categories.length; i++) {
         if (category === categories[i]) {

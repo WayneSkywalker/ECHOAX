@@ -38,11 +38,19 @@ let MemberSchema = new mongoose.Schema({
         type: String,
         default: 'user' //admin
     },
-    vote_yes: {
+    fvote_yes: {
         type: Number,
         default: 0
     },
-    vote_no: {
+    hvote_yes: {
+        type: Number,
+        default: 0
+    },
+    fvote_no: {
+        type: Number,
+        default: 0
+    },
+    hvote_no: {
         type: Number,
         default: 0
     }
