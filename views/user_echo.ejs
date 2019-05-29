@@ -1,10 +1,10 @@
 <% include ./partials/header %>
-    <title>(ADMIN)USER's ECHO</title>
+    <title>(ADMIN) USER's ECHO</title>
 </head>
-<body background="https://i.imgur.com/MjBOCeH.png" class="bg">
+<% if(news.category ==='fakenews'){ %> <body background="https://i.imgur.com/MjBOCeH.png" class="bg"> <% } else if( news.category==='hoax'){ %> <body background="https://i.imgur.com/ZnzXwZT.png" class="bg"> <% } else { %> <body background="https://i.imgur.com/2LFNL5m.png" class="bg"> <% } %>
     <% include ./partials/navbar %>
     <div class="w" style="font-size: 50px;">
-        <center>Username'S ECHO</center>
+        <center><%= news.author %>'S ECHO</center>
     </div>
     <div class="container" style="width: 90%">
         <div class="row">
@@ -18,10 +18,10 @@
                 <div class="container" style="padding:30px;">
                     <div class="row w">
                         <div class="col-30u">
-                            TOPIC
+                            TITLE
                         </div>
                         <div class="col-70u ">
-                            Topic1
+                            <%= news.title %>
                         </div>
                     </div>
     
@@ -30,30 +30,37 @@
                             CATEGORY
                         </div>
                         <div class="col-70u">
-                            <x style="color: #b1b1ff;"> FAKE NEWS </x>
-                            <x class="w"> POLITICS</x>
+                            <% if(news.category ==='fakenews'){ %> <x style="color: #b1b1ff;"> FAKE NEWS </x> <% } else if( news.category==='hoax'){ %> <x style="color: #fefe99;"> HOAX </x> <% } else { %> <x style="color: #ffa6a6;"> PHISHING </x> <% } %>
+                            <x class="w">   <%= news.subCategory.toUpperCase() %></x>
                         </div>
                     </div>
                     <div class="row w">
                         <div class="col-30u w">
-                            DESCRIPTION
+                            CONTENT
                         </div>
                     </div>
                     <p id="usernews" class="w">
-                        XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+                        <%= news.content %>
                     </p>
                     <div class="row">
                         <div class="col-30u w">
                             REFERNENCE
                         </div>
                         <div class="col-70u w">
-                            www.xxxxxxxx.com
+                            <%= news.ref1 %>
                         </div>
+                        <% if(news.ref2){%>
+                            <div class="col-70u w">
+                                <%= news.ref2 %>
+                            </div>
+                        <% } %>
                     </div>
                     <center style="padding-top: 10px;">
                         <button class="greenbtn w">ACCEPT</button>
                         <button class="redbtn w">DELETE</button>
-                        <button class="yelbtn">BACK</button>
+                        <a href="userrequest">
+                            <button class="yelbtn">BACK</button>
+                        </a>
                     </center>
                 </div>
             </div>

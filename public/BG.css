@@ -284,6 +284,16 @@ button[name='signbtn'] {
 .blog{
 	background-color: #222222;
 }
+.voteYes {
+	border: none;
+	background: none;
+	color: green;
+}
+.voteNO {
+	border: none;
+	background: none;
+	color: red;
+}
 input[name='vote'] {
 	border: none;
 	background: none;

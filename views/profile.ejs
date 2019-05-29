@@ -11,9 +11,11 @@
             </div>
             <div class="col-75">
                 <h class="w">
-                    <r> Username </r><br>
-                    <n> Firstname Lastname </n><br>
-                    <m> motto. </m>
+                    <r> <%= member.username %> </r><br>
+                    <n> <%= member.firstname + "  " + member.lastname %> </n><br>
+                <% if(member.location){%>
+                    <m><%= member.bio %></m>
+                <% } %>
                 </h>
             </div>
         </div>
@@ -21,12 +23,12 @@
             <div class="col-25">
                 <div class="card">
                     <hd>GENDER</hd>
-                    xxxxxx
-                    <hd>BIRTH DATE</hd>
-                    xx xx xx
+                    <%= member.gender %>
+                    <hd>BIRTHDATE</hd>
+                    <%= member.birthdate.toDateString() %>
                     <hd>LOCATION</hd>
-                    xxxxxxxxxxxxxxxx
-                    <center><input type="button" name="edit" value="EDIT PROFILE" onclick="location.href='edit.html';">
+                    <% if(member.location){ console.log(member.location); } else { console.log("-"); } %>
+                    <center><input type="button" name="edit" value="EDIT PROFILE" onclick="location.href='edit';">
                     </center>
                 </div>
             </div>
@@ -34,19 +36,21 @@
                 <div class="tab">
                     <button class="tablinks active" onclick="opentab(event, 'OVERVIEW')">OVERVIEW</button>
                     <button class="tablinks" onclick="opentab(event, 'STAT')">STAT</button>
-                    <a href="ECHO.html"><button class="w"
-                            style="float: right; background-color: red; border-radius: 10px;">ECHO</button></a>
+                    <a href="echo"><button class="w" style="float: right; background-color: red; border-radius: 10px;">ECHO</button></a>
+                    <% if(member.status === 'admin') { %>
+                        <a href="userrequest"><button class="w" style="float: right; background-color: yellow; border-radius: 10px;">USER'S ECHO</button></a>
+                    <% } %>
                 </div>
                 <div id="OVERVIEW" class="tabcontent" style="display: block;">
                     <h2>E-mail</h2>
-                    <p>XXXXXX@XXXX.COM</p>
+                    <p><%= member.email %></p>
                 </div>
                 <div id="STAT" class="tabcontent">
                     <h2>VOTE&ensp;&ensp;&ensp;&ensp;&ensp;<x style="color: green">YES</x>&ensp;<x style="color: red">NO</x>
                     </h2>
-                    <div>Fake news&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; 0000&ensp;&ensp;&ensp;0000</div>
+                    <div>Fake news&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp; <%= member.fvote_yes %>&ensp;&ensp;&ensp;<%= member.fvote_no %></div>
                     <div>Hoax&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
-                        0000&ensp;&ensp;&ensp;0000</div>
+                        <%= member.hvote_yes %>&ensp;&ensp;&ensp;<%= member.hvote_no %></div>
                 </div>
             </div>
         </div>

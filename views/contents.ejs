@@ -3,45 +3,34 @@
 </head>
 <% if(category ==='fakenews'){ %> <body background="https://i.imgur.com/MjBOCeH.png" class="bg"> <% } else { %> <body background="https://i.imgur.com/ZnzXwZT.png" class="bg"> <% } %>
     <% include ./partials/navbar %>
-    <!-- unfinished -->
+    <div class="htop">
+        <img src="https://i.imgur.com/Dhhew9n.jpg" width="100%">
+    </div>
+    <% if(category ==='fakenews'){ %> <div class="p pl25" style="font-size: 100px; line-height: 1;">FAKE NEWS</div> <% } else { %> <div class="p pl25" style="font-size: 100px; line-height: 1;">HOAX</div> <% } %>
+    <br>
+    <div class="gray pl25" style="line-height: 1;"><%= subcategory.toUpperCase() %></div>
+    <br>
     <div class="container-fluid">
-        <div class="row no-gutters">
-            <a href="politic1.html" class="col-33card">
-                <div class="card backp">
-                    <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
-                    <div class="container">
-                        <div class="ntopic">TOPIC1</div>
-                        <div class="ndes">DESCRIPTION OF TOPIC1</div>
-                        <div class="ndt">BY ADMIN</div>
-                        <div class="ndt">POSTED 00 XXXXXXXXX 0000</div>
-                        <div style="float: right;"><input type="button" name="vote" value="YES"> 00000 <input type="button" name="vote" value="NO"> 00000 </div>
+        <% for(let i = 0;i < news.length ; i++){ %>
+            <% if(i%3===0){ %>
+                <div class="row no-gutters">
+            <% } %>
+                <a href="news/<%= news[i].id %>" class="col-33card">
+                    <div class="card backp">
+                        <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
+                        <div class="container">
+                            <div class="ntopic"><%= news[i].title %></div>
+                            <div class="ndes"><%= news[i].content.substring(0,45) + " ..." %></div>
+                            <div class="ndt">BY <%= news[i].author %></div>
+                            <div class="ndt">POSTED ON <%= news[i].date_posted.toDateString() %></div>
+                            <div style="float: right;"><input type="button" name="vote" value="YES"> <%= news[i].voteYes %> <input type="button"
+                                    name="vote" value="NO"> <%= news[i].voteNo %> </div>
+                        </div>
                     </div>
+                </a>
+            <% if(i%3===2){ %>
                 </div>
-            </a>
-            <a href="politic1.html" class="col-33card">
-                <div class="card backp">
-                    <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
-                    <div class="container">
-                        <div class="ntopic">TOPIC1</div>
-                        <div class="ndes">DESCRIPTION OF TOPIC1</div>
-                        <div class="ndt">BY ADMIN</div>
-                        <div class="ndt">POSTED 00 XXXXXXXXX 0000</div>
-                        <div style="float: right;"><input type="button" name="vote" value="YES"> 00000 <input type="button" name="vote" value="NO"> 00000 </div>
-                    </div>
-                </div>
-            </a>
-            <a href="politic1.html" class="col-33card">
-                <div class="card backp">
-                    <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
-                    <div class="container">
-                        <div class="ntopic">TOPIC1</div>
-                        <div class="ndes">DESCRIPTION OF TOPIC1</div>
-                        <div class="ndt">BY ADMIN</div>
-                        <div class="ndt">POSTED 00 XXXXXXXXX 0000</div>
-                        <div style="float: right;"><input type="button" name="vote" value="YES"> 00000 <input type="button" name="vote" value="NO"> 00000 </div>
-                    </div>
-                </div>
-            </a>
-        </div>
+            <% } %>
+        <% } %>
     </div>
 <% include ./partials/footer %>

@@ -3,6 +3,9 @@
 </head>
 <% if(news.category ==='fakenews'){ %> <body background="https://i.imgur.com/MjBOCeH.png" class="bg"> <% } else if( news.category==='hoax'){ %> <body background="https://i.imgur.com/ZnzXwZT.png" class="bg"> <% } else { %> <body background="https://i.imgur.com/2LFNL5m.png" class="bg"> <% } %>
     <% include ./partials/navbar %>
+    <div class="htop">
+        <img src="https://i.imgur.com/Dhhew9n.jpg" width="100%">
+    </div>
     <% if( news.category==='fakenews'){ %> 
         <div class="p pl25" style="font-size: 40px; ">FAKE NEWS <h class="w" style="font-size: 15px"><%= news.subCategory.toUpperCase() %></h></div>
     <% } else if( news.category==='hoax'){ %>
@@ -10,14 +13,15 @@
     <% } else { %>
         <div class="p pl25" style="font-size: 40px; ">HOAX</div>
     <% } %>
-    <!-- top picture is here. -->
-    <!--<div class="htop">
-        <img src="https://i.imgur.com/Dhhew9n.jpg" width="100%">
-    </div>-->
 
-    <div class="p pl25" style="font-size: 100px; line-height: 1;"><%= news.title %></div> <!-- topic value is required. -->
-    <div class="gray pl25" style="line-height: 1;">POSTED ON <%= news.date_posted %> BY <%= news.author %> </div> <!-- date_posted and author are required. -->
+    <div class="p pl25" style="font-size: 100px; line-height: 1;"><%= news.title %></div>
+    <br>
+    <div class="gray pl25" style="line-height: 1;">POSTED ON <%= news.date_posted.toDateString() %> BY <%= news.author %> </div>
+    <br>
     <!-- content is here and required. -->
+    <article class="w pl25">
+        <%= news.content %>
+    </article>
     <!-- picture is here and required. -->
 
     <div class="w pl25">REFERENCE : <%= news.ref1 %></div> <!-- reference 1 is required. -->
@@ -26,9 +30,7 @@
     <% } %>
 
     <div>
-        <center><input type="button" name="voteYes" value="YES">&emsp;<input type="button" name="voteNo" value="NO"></center>
+        <center><input type="button" class="voteYes" name="voteYes" value="YES">&emsp;<input type="button" class="voteNo" name="voteNo" value="NO"></center>
     </div>
-
-
-
+    
 <% include ./partials/footer %>

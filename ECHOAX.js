@@ -205,8 +205,15 @@ app.get("/logout", function (req, res) {
 });
 
 //user's part
-app.get("/profile/:id", ensureAuthenticated, function (req, res) {          //unfinished
-    res.render("profile");
+app.get("/profile/:id"/*, ensureAuthenticated*/, function (req, res) {          //unfinished
+    member.findById(req.params.id, function (err, member) {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(member);
+            res.render("profile", { member: member });
+        }
+    });
 });
 app.get("/editprofile/:id", ensureAuthenticated, function (req, res) {   //unfinished
     res.render("edit");
@@ -231,23 +238,17 @@ app.get("/popular", function (req, res) {
             });
         });
     });
-    //res.render("popular");
 });
 
 /* search */
 // main search
-app.post("/mainsearch", function(req,res){      //unfinished    not complete
-    let search = req.body.mainsearch;
-    member.find({title: search}, function (err, findNews) {
-        if (err) {
-            console.log(err);
-        } else if(findNews) {
-            console.log(findNews);
-            res.redirect("/search");
+app.post("/mainsearch", function(req,res){      
+    news.find({title: req.body.mainsearch,status: 'posted'}).then(function(findNews){
+        if(findNews){
+            res.render("search",{news: findNews});
         } else {
-            console.log("NO");
-            res.redirect("/");
-            //res.redirect("/notfound");
+            res.render("notfound");
+            //res.render("notfound",{text: req.body.mainsearch});
         }
     });
 });
@@ -256,15 +257,14 @@ app.get("search", function(req,res){
 });
 //fake news search
 app.post("/fakenewssearch", function (req, res) {  //unfinished    not complete
-    let search  = req.body.fakenewssearch;
-    member.find({ title: search, category: 'fakenews' }).then(function (result) {
-        if (result) {
-            console.log(result);
-            res.redirect("/"); //redirect somewhere
+    news.find({ title: req.body.fakenewssearch, category: 'fakenews', status: 'posted'}).then(function(findNews){
+        if(findNews){
+            console.log(findNews);
+            res.render("search",{news: findNews});
         } else {
-            console.log("ERROR!");
+            res.render("notfound");
         }
-    }).catch(function (err) {
+    }).catch(function(err){
         console.log(err);
     });
 });
@@ -298,24 +298,35 @@ app.post("/phissearch", function (req, res) {      //unfinished    not complete
 });
 
 /* single news */
-app.get("/news/:id", function (req, res) {     //unfinished
-    member.findById(req.params.id, function (err, foundNews) {
-        member.findById(foundNews.author, function(err, member){
-            res.render("news",{news: foundNews});
-        });
-        // if (err) {
-        //     console.log(err);
-        //     res.redirect("/category");
-        //     //res.redirect("/notfound");
-        // } else {
-        //     console.log(foundNews);
-        //     res.render("news", { news: foundNews });
-        // }
+app.get("/news/:id", function (req, res) {
+    news.findById(req.params.id, function (err, news) {
+        if(err){
+            //console.log(req.params.id);
+            console.log(err);
+        } else {
+            res.render("news",{news: news});
+        }
     });
 });
 
+app.get("/:category/news/:id", function(req,res){
+    //let category = req.params.category;
+    let categories = ['fakenews', 'hoax', 'phishing'];
+    for(let i = 0;i < categories.length;i++){
+        if(req.params.category===categories[i]){
+            news.findById(req.params.id, function (err, news) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    res.render("news", { news: news });
+                }
+            });
+        }
+    }
+});
+
 /* create news */
-app.get("/echo", ensureAuthenticated, function (req, res) {          //unfinished
+app.get("/echo"/*,ensureAuthenticated*/, function (req, res) {          //unfinished
     res.render("echo");
 });
 app.post("/echo",function(req,res){
@@ -343,21 +354,17 @@ app.post("/echo",function(req,res){
 //admin's part
 app.get("/userrequest"/*, ensureAuthenticated*/ , function (req, res) {      //unfinished 
     news.find({ status: 'wait' }).then(function (findNews) {
-        console.log(findNews);
         res.render("user_request",{news: findNews});
-    }).catch(function(err){
-        console.log(err);
     });
     //res.render("user_request");
 });
 app.get("/userecho/:id"/*, ensureAuthenticated*/, function (req, res) {         //unfinished
-    member.findById(req.params.id, function (err, foundNews) {
-        member.findById(foundNews.author, function (err, member) {
-            res.render("user_echo", {
-                news: foundNews,
-                author: member.username
-            });
-        });
+    news.findById(req.params.id, function(err,news){
+        if(err){
+            console.log(err);
+        } else {
+            res.render("user_echo",{news: news});
+        }
     });
 });
 
@@ -392,7 +399,7 @@ app.get("/:category", function (req, res) {
     }
 });
 
-app.get("/:category/:subcategory", function (req, res) {    //unfinished    cannot route
+app.get("/:category/:subcategory", function (req, res) {   
     let category = req.params.category;
     let subcategory = req.params.subcategory;
     let categories = ['fakenews', 'hoax', 'phishing'];
@@ -403,13 +410,21 @@ app.get("/:category/:subcategory", function (req, res) {    //unfinished    cann
             if (category === 'fakenews') {
                 for (let j = 0; j < fakecate.length; j++) {
                     if (subcategory === fakecate[j]) {
-                        res.render("contents", { category: category, subcategory: subcategory });
+                        news.find({ category: category, subCategory: subcategory ,status: 'posted' }).then(function (findNews) {
+                            res.render("contents", { category: category, subcategory: subcategory, news: findNews });
+                        }).catch(function (err) {
+                            console.log(err);
+                        });
                     }
                 }
             } else if (category === 'hoax') {
                 for (let j = 0; j < hoaxcate.length; j++) {
                     if (subcategory === hoaxcate[j]) {
-                        res.render("contents", { category: category, subcategory: subcategory });
+                        news.find({ category: category, subCategory: subcategory, status: 'posted' }).then(function (findNews) {
+                            res.render("contents", { category: category, subcategory: subcategory, news: findNews });
+                        }).catch(function (err) {
+                            console.log(err);
+                        });
                     }
                 }
             } else res.render("phishing");
@@ -417,35 +432,8 @@ app.get("/:category/:subcategory", function (req, res) {    //unfinished    cann
     }
 });
 
-// /* news */
-// app.get("/news/:id", function (req, res) {     //unfinished
-//     let id = req.params.id;
-//     member.findById(id, function(err, foundNews){
-//         if(err){
-//             console.log(err);
-//             res.redirect("/category");
-//             //res.redirect("/notfound");
-//         } else {
-//             res.render("news",{news: foundNews});
-//         }
-//     })
-//     res.render("news");
-// });
-
-// /* create news */
-// app.get("/echo", function (req, res) {          //unfinished
-//     res.render("echo");
-// });
-
-// //admin's part
-// app.get("/userrequest", function (req, res) {      //unfinished
-//     res.render("user_request");
-// });
-// app.get("/userecho", function (req, res) {         //unfinished
-//     res.render("user_echo");
-// });
 //------------------------------------------------------------------------------------------------------------------------------------app
-/* listen to port 3000 */
+/* listen to port 4000 */
 app.listen(3000,function(){
     console.log("listen to 3000");
 });
