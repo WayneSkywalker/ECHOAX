@@ -390,7 +390,7 @@ app.get("/news/:id", function (req, res) {
 
 /* create news */
 app.get("/echo", ensureAuthenticated, function (req, res) {
-    res.render("echo", { member: req.user });
+    res.render("echo", { Member: req.user });
 });
 app.post("/echo",ensureAuthenticated,function(req,res){
     let echo = new news();
