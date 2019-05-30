@@ -6,23 +6,24 @@
     <div class="htop">
         <img src="https://i.imgur.com/Dhhew9n.jpg" width="100%">
     </div>
-    <% if(category ==='fakenews'){ %> <div class="p pl25" style="font-size: 100px; line-height: 1;">FAKE NEWS</div> <% } else { %> <div class="p pl25" style="font-size: 100px; line-height: 1;">HOAX</div> <% } %>
+    <% if(category ==='fakenews'){ %> <div class="p pl25" style="font-size: 100px; line-height: 1; color: #b1b1ff;">FAKE NEWS</div> <% } else { %> <div class="p pl25" style="font-size: 100px; line-height: 1; color: #fefe99;">HOAX</div> <% } %>
     <br>
     <div class="gray pl25" style="line-height: 1;"><%= subcategory.toUpperCase() %></div>
     <br>
     <div class="container-fluid">
         <% for(let i = 0;i < news.length ; i++){ %>
-            <% if(i%3===0){ %>0
+            <% if(i%3===0){ %>
                 <div class="row no-gutters">
             <% } %>
                 <a href="/news/<%= news[i].id %>" class="col-33card">
-                    <div class="card backp">
+                    <% if(category ==='fakenews'){ %> <div class="card backp"> <% } else { %> <div class="card backhoax"> <% } %>
                         <img src="https://i.imgur.com/hHQOHIb.jpg" alt="headpic" style="width:100%">
                         <div class="container">
                             <div class="ntopic"><%= news[i].title %></div>
-                            <div class="ndes"><%= news[i].content.substring(0,45) + " ..." %></div>
+                            <div class="ndes"><%= news[i].content.substring(0,30) + " ..." %></div>
                             <div class="ndt">BY <%= news[i].author %></div>
                             <div class="ndt">POSTED ON <%= news[i].date_posted.toDateString() %></div>
+                            <br>
                         </div>
                     </div>
                 </a>

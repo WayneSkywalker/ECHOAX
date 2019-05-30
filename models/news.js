@@ -34,7 +34,10 @@ let NewsSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    date_posted: Date,
+    date_posted: {
+        type: Date,
+        default: Date.now
+    },
     status: {
         type: String,
         default: 'wait',

@@ -437,15 +437,19 @@ app.get("/userecho/:id", ensureAuthenticated, function (req, res) {         //un
 // grant post permission
 app.post("/postnews/:id", function(req,res){
     let query = {_id: req.params.id};
+    let time = Date.now();
     news.findById(req.params.id, function(err,newss){
         if(err){
             console.log(err);
         } else {
             newss.status = 'posted';
+            newss.date_posted = time;
             news.update(query,newss, function(err){
                 if(err){
                     console.log(err);
                 } else {
+                    console.log(newss.date_posted);
+                    console.log(newss);
                     res.redirect("/userrequest");
                 }
             });
