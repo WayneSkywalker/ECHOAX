@@ -36,10 +36,11 @@
                 <div class="tab">
                     <button class="tablinks active" onclick="opentab(event, 'OVERVIEW')">OVERVIEW</button>
                     <button class="tablinks" onclick="opentab(event, 'STAT')">STAT</button>
-                    <a href="/echo"><button class="w" style="float: right; background-color: red; border-radius: 10px;">ECHO</button></a>
                     <% if(Member.status === 'admin') { %>
-                        <a href="/userrequest"><button class="w" style="float: right; background-color: yellow; border-radius: 10px;">USER'S ECHO</button></a>
+                    <a href="/userrequest"><button class="w" style="float: right; background-color: yellow; border-radius: 10px;">USER'S
+                            ECHO</button></a>
                     <% } %>
+                    <a href="/echo"><button class="w" style="float: right; background-color: red; border-radius: 10px;">ECHO</button></a>
                 </div>
                 <div id="OVERVIEW" class="tabcontent" style="display: block;">
                     <h2>E-mail</h2>
