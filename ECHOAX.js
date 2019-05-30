@@ -147,6 +147,8 @@ app.post("/register", function (req, res) {
         //res.render("signup");
         //res.render("test",{errors: errors});
         //res.send(errors);
+        console.log(errors);
+        console.log(check);
         res.redirect("/signup");
     } else {
         let newMember = new member({
