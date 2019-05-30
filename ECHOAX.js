@@ -478,7 +478,7 @@ function ensureAuthenticated(req,res,next){
 
 /* category */
 app.get("/category", function (req, res) {
-    res.render("category", { member: req.user });
+    res.render("category", { Member: req.user });
 });
 app.get("/:category", function (req, res) {
     let category = req.params.category;
@@ -509,7 +509,7 @@ app.get("/:category/:subcategory", function (req, res) {
                 for (let j = 0; j < fakecate.length; j++) {
                     if (subcategory === fakecate[j]) {
                         news.find({ category: category, subCategory: subcategory ,status: 'posted' }).then(function (findNews) {
-                            res.render("contents", { category: category, subcategory: subcategory, news: findNews, member: req.user });
+                            res.render("contents", { category: category, subcategory: subcategory, news: findNews, Member: req.user });
                         }).catch(function (err) {
                             console.log(err);
                         });
@@ -519,7 +519,7 @@ app.get("/:category/:subcategory", function (req, res) {
                 for (let j = 0; j < hoaxcate.length; j++) {
                     if (subcategory === hoaxcate[j]) {
                         news.find({ category: category, subCategory: subcategory, status: 'posted' }).then(function (findNews) {
-                            res.render("contents", { category: category, subcategory: subcategory, news: findNews, member: req.user });
+                            res.render("contents", { category: category, subcategory: subcategory, news: findNews, Member: req.user });
                         }).catch(function (err) {
                             console.log(err);
                         });
