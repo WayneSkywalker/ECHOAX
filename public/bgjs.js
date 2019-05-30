@@ -10,7 +10,6 @@ $('#1').on('click', function (event) {
   $('.topic').removeClass('hide-item');
 });
 
-
 $('#searchbtn').on('click', function (event) {
   $('.topic').addClass('hide-item')
   $('.search-topic').addClass('active')
