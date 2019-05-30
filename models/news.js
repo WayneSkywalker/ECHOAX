@@ -9,11 +9,11 @@ let NewsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    //subCategory: String,
-    subCategory: {
-        type: String,
-        required: true
-    },
+    subCategory: String,
+    // subCategory: {
+    //     type: String,
+    //     required: true
+    // },
     // news_pic: {
     //     type: String     
     // },

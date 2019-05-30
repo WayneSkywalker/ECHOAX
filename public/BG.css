@@ -75,14 +75,23 @@ body{
 	left:50%;
 	transform: translate(-50%,-50%);
 }
+#signuplink {
+	color: #000FF0;
+}
+#signuplink:hover {
+	color: #00FFFF;	
+}
 #log{
 	border-style: none;
 	background-color: white;
 	color: black;
 	border-radius: 4px;
+	transition-duration: 0.5s;
 }
 #log:hover{
 	cursor: pointer;
+	color: white;
+	background-color: black;
 }
 #fake{
 	font-size: 40px;
@@ -284,38 +293,29 @@ button[name='signbtn'] {
 .blog{
 	background-color: #222222;
 }
-.voteYes {
-	border: none;
-	background: none;
-	color: green;
-}
-.voteNO {
-	border: none;
-	background: none;
-	color: red;
-}
 input[name='vote'] {
 	border: none;
 	background: none;
-}
-input[value=YES]{
-	color: green;
-}
-input[value=NO]{
-	color: red;
 }
 .gray{
 	color: gray;
 }
 .pl25{
 	padding-left: 25%;
+	padding-right: 25%;
+}
+.newshead {
+	font-size: 40px;
+}
+.news {
+	font-size: 5em;
 }
 .ph{
 	overflow-wrap: break-word;
 }
 article { 
   display: block;
-  width: 75%;
+	width: 100%;
   overflow-wrap: break-word;
   line-height: 2;
 }
@@ -330,6 +330,7 @@ article {
 	padding: 25px;
 	margin-top: 40px;
 }
+
 r 	{
 	font-size: 100px;
 	line-height: 1;
@@ -420,6 +421,11 @@ textarea[name=echo],input[name=echo]{
 	padding: 10px;
 	border: none;
 	background-color: green;
+	transition-duration: 0.5s;
+}
+.greenbtn:hover {
+	background-color:#ffffff ;
+	color: #4CAF50;
 }
 .redbtn{
 	border-radius: 6px;
@@ -562,6 +568,16 @@ textarea[name=echo],input[name=echo]{
 		visibility: hidden;
 		opacity: 0;
 	}
+	.pl25{
+		padding-left: 10%;
+		padding-right: 10%;
+	}
+	.news , .newshead{
+		font-size: 26px;
+	}
+	k{
+		text-align: center;
+	}
 }
 @media only screen and (max-width: 1024px){
   #headca{
@@ -659,7 +675,3 @@ textarea[name=echo],input[name=echo]{
     padding: 5px 0px 5px 0px;
   }
 }
-
-
-
-

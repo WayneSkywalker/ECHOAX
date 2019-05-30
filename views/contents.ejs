@@ -23,8 +23,6 @@
                             <div class="ndes"><%= news[i].content.substring(0,45) + " ..." %></div>
                             <div class="ndt">BY <%= news[i].author %></div>
                             <div class="ndt">POSTED ON <%= news[i].date_posted.toDateString() %></div>
-                            <div style="float: right;"><input type="button" name="vote" value="YES"> <%= news[i].voteYes %> <input type="button"
-                                    name="vote" value="NO"> <%= news[i].voteNo %> </div>
                         </div>
                     </div>
                 </a>

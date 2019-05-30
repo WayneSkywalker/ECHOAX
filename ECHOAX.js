@@ -187,7 +187,7 @@ app.get("/login", function (req, res) {
 app.post("/login", function (req, res, next) {
     passport.authenticate("local", {
         //successRedirect: "/",
-        successRedirect: "/test",
+        successRedirect: "/",
         failureRedirect: "/login",
         failureFlash: true
     })(req, res, next);
@@ -195,9 +195,6 @@ app.post("/login", function (req, res, next) {
 
 /* log out */
 // test
-app.get("/test",function(req,res){
-    res.render("test");
-});
 app.get("/logout", function (req, res) {
     req.logout();
     req.flash('success', 'You are logged out.');
@@ -205,7 +202,7 @@ app.get("/logout", function (req, res) {
 });
 
 /* user's profile */
-app.get("/profile/:id"/*, ensureAuthenticated*/, function (req, res) {          //unfinished
+app.get("/profile/:id", ensureAuthenticated,function (req, res) {          //unfinished
     member.findById(req.params.id, function (err, member) {
         if (err) {
             console.log(err);
@@ -216,7 +213,7 @@ app.get("/profile/:id"/*, ensureAuthenticated*/, function (req, res) {          
     });
 });
 /* edit user's profile */
-app.get("/editprofile/:id"/*, ensureAuthenticated*/, function (req, res) {   //unfinished
+app.get("/editprofile/:id", ensureAuthenticated,function (req, res) {   //unfinished
     member.findById(req.params.id, function(err, member){
         if(err){
             console.log(err);
@@ -225,7 +222,7 @@ app.get("/editprofile/:id"/*, ensureAuthenticated*/, function (req, res) {   //u
         }
     });
 });
-app.post("/editprofile/:id", function(req,res){
+app.post("/editprofile/:id", ensureAuthenticated, function(req,res){         //unfinished
     let oldpassword = req.body.oldpassword;
     let newpassword = req.body.newpassword;
     let renewpassword = req.body.renewpassword;
@@ -240,10 +237,8 @@ app.post("/editprofile/:id", function(req,res){
         if(err){
             console.log(err);
         } else {
-            console.log(members);
             if(!oldpassword){
                 oldpassword = members.password;
-                console.log(oldpassword);
             } else {
                 bcrypt.genSalt(10, function (err, salt) {
                     bcrypt.hash(oldpassword, salt, function (err, hash) {
@@ -251,7 +246,6 @@ app.post("/editprofile/:id", function(req,res){
                             console.log(err);
                         }
                         oldpassword = hash;
-                        console.log(oldpassword);
                     });
                 });
             }
@@ -286,7 +280,6 @@ app.post("/editprofile/:id", function(req,res){
                             mem.hvote_yes = members.hvote_yes;
                             mem.fvote_no = members.fvote_no;
                             mem.hvote_no = members.hvote_no;
-                            console.log(mem);
                             member.update(query, mem, function (err) {
                                 if (err) {
                                     console.log(err);
@@ -298,11 +291,9 @@ app.post("/editprofile/:id", function(req,res){
                         });
                     });
                 } else {
-                    console.log("password not equal");
                     res.redirect("/editprofile"); //wrong route
                 }
             } else {
-                console.log("old password not correct.");
                 res.redirect("/editprofile");   //wrong route
             }
         }
@@ -310,7 +301,7 @@ app.post("/editprofile/:id", function(req,res){
 });
 //-----------------------------------------------------------------------------------------------------------------------------------------
 /* new */
-app.get("/new", function (req, res) {
+app.get("/new", ensureAuthenticated,function (req, res) {
     news.find({ category: 'fakenews', status: 'posted' }).sort({ date_posted: -1 }).limit(3).then(function (fakeNews) {
         news.find({ category: 'hoax', status: 'posted' }).sort({ date_posted: -1 }).limit(3).then(function (hoax) {
             news.find({ category: 'phishing', status: 'posted' }).sort({ date_posted: -1 }).limit(3).then(function (phishing) {
@@ -320,7 +311,7 @@ app.get("/new", function (req, res) {
     });
 });
 /* popular */
-app.get("/popular", function (req, res) {
+app.get("/popular", ensureAuthenticated, function (req, res) {
     news.find({ category: 'fakenews', status: 'posted' }).sort({ voteYes: -1 }).limit(3).then(function (fakeNews) {
         news.find({ category: 'hoax', status: 'posted' }).sort({ voteYes: -1 }).limit(3).then(function (hoax) {
             news.find({ category: 'phishing', status: 'posted' }).sort({ voteYes: -1 }).limit(3).then(function (phishing) {
@@ -332,9 +323,10 @@ app.get("/popular", function (req, res) {
 
 /* search */
 // main search
-app.post("/mainsearch", function(req,res){      
+app.post("/mainsearch", ensureAuthenticated, function(req,res){      
     news.find({title: req.body.mainsearch,status: 'posted'}).then(function(findNews){
         if(findNews){
+            console.log(findNews);
             res.render("search",{news: findNews});
         } else {
             res.render("notfound");
@@ -346,7 +338,7 @@ app.get("search", function(req,res){
     res.render("search");
 });
 //fake news search
-app.post("/fakenewssearch", function (req, res) {  //unfinished    not complete
+app.post("/fakenewssearch", ensureAuthenticated, function (req, res) {  
     news.find({ title: req.body.fakenewssearch, category: 'fakenews', status: 'posted'}).then(function(findNews){
         if(findNews){
             console.log(findNews);
@@ -359,28 +351,26 @@ app.post("/fakenewssearch", function (req, res) {  //unfinished    not complete
     });
 });
 //hoax search
-app.post("/hoaxsearch", function (req, res) {   //unfinished    not complete
-    let search = req.body.hoaxsearch;
-    member.find({ title: search, category: 'hoax' }).then(function (result) {
-        if (result) {
-            console.log(result);
-            res.redirect("/"); //redirect somewhere
+app.post("/hoaxsearch", ensureAuthenticated, function (req, res) {
+    news.find({ title: req.body.hoaxsearch, category: 'hoax', status: 'posted' }).then(function (findNews) {
+        if (findNews) {
+            console.log(findNews);
+            res.render("search", { news: findNews });
         } else {
-            console.log("ERROR!");
+            res.render("notfound");
         }
     }).catch(function (err) {
         console.log(err);
     });
 });
 //phishing search
-app.post("/phissearch", function (req, res) {      //unfinished    not complete
-    let search = req.body.phissearch;
-    member.find({ title: search, category: 'phishing' }).then(function (result) {
-        if (result) {
-            console.log(result);
-            res.redirect("/"); //redirect somewhere
+app.post("/phissearch", ensureAuthenticated, function (req, res) {
+    member.find({ title: req.body.phissearch, category: 'phishing' }).then(function (findNews) {
+        if (findNews) {
+            console.log(findNews);
+            res.render("search", { news: findNews });
         } else {
-            console.log("ERROR!");
+            res.render("notfound");
         }
     }).catch(function (err) {
         console.log(err);
@@ -388,7 +378,7 @@ app.post("/phissearch", function (req, res) {      //unfinished    not complete
 });
 
 /* single news */
-app.get("/news/:id", function (req, res) {
+app.get("/news/:id", ensureAuthenticated,function (req, res) {
     news.findById(req.params.id, function (err, news) {
         if(err){
             //console.log(req.params.id);
@@ -399,34 +389,18 @@ app.get("/news/:id", function (req, res) {
     });
 });
 
-app.get("/:category/news/:id", function(req,res){
-    //let category = req.params.category;
-    let categories = ['fakenews', 'hoax', 'phishing'];
-    for(let i = 0;i < categories.length;i++){
-        if(req.params.category===categories[i]){
-            news.findById(req.params.id, function (err, news) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    res.render("news", { news: news });
-                }
-            });
-        }
-    }
-});
-
 /* create news */
-app.get("/echo"/*,ensureAuthenticated*/, function (req, res) {          //unfinished
+app.get("/echo",ensureAuthenticated, function (req, res) {          //unfinished
     res.render("echo");
 });
-app.post("/echo",function(req,res){
+app.post("/echo", ensureAuthenticated,function(req,res){
     let echo = new news();
     echo.title = req.body.title;
     echo.category = req.body.category;
     echo.subCategory = req.body.subcategory;
     //echo.author = req.body.author;
-    echo.author = req.member.username;
-    //echo.author = 'quay';
+    //echo.author = req.member.username;
+    echo.author = 'quay';
     echo.content = req.body.echo;
     echo.ref1 = req.body.ref1;
     echo.ref2 = req.body.ref2;
@@ -443,14 +417,14 @@ app.post("/echo",function(req,res){
 
 /* admin's part */
 // view users's requests
-app.get("/userrequest"/*, ensureAuthenticated*/ , function (req, res) {      //unfinished 
+app.get("/userrequest", ensureAuthenticated , function (req, res) {      //unfinished 
     news.find({ status: 'wait' }).then(function (findNews) {
         res.render("user_request",{news: findNews});
     });
     //res.render("user_request");
 });
 // view user's news
-app.get("/userecho/:id"/*, ensureAuthenticated*/, function (req, res) {         //unfinished
+app.get("/userecho/:id", ensureAuthenticated, function (req, res) {         //unfinished
     news.findById(req.params.id, function(err,news){
         if(err){
             console.log(err);
@@ -459,8 +433,9 @@ app.get("/userecho/:id"/*, ensureAuthenticated*/, function (req, res) {         
         }
     });
 });
+
 // grant post permission
-app.post("/postnews/:id", function(req,res){
+app.post("/postnews/:id", ensureAuthenticated, function(req,res){
     let query = {_id: req.params.id};
     news.findById(req.params.id, function(err,newss){
         if(err){
@@ -477,22 +452,21 @@ app.post("/postnews/:id", function(req,res){
         }
     });
 });
-app.delete("/deletenews/:id", function(req,res){
-    let query = {_id: req.params.id};
-    news.remove(query, function(err){
-        if(err){
+// delete user's post
+app.get("/deletenews/:id", ensureAuthenticated, function(req,res){
+    news.findByIdAndRemove(req.params.id, function (err) {
+        if (err) {
             console.log(err);
         } else {
-            console.log("DELETE!!");
-            res.render("success");
+            res.redirect("/userrequest");
         }
     });
 });
 
-app.get("/notfound",function(req,res){
+app.get("/notfound",ensureAuthenticated,function(req,res){
     res.render("notfound");
 });
-app.get("/success",function(req,res){
+app.get("/success",ensureAuthenticated,function(req,res){
     res.render("success");
 });
 
@@ -500,16 +474,15 @@ function ensureAuthenticated(req,res,next){
     if(req.isAuthenticated()){
         return next();
     } else {
-        req.flash("danger","Please login");
         res.redirect("/login");
     }
 }
 
 /* category */
-app.get("/category", function (req, res) {
+app.get("/category", ensureAuthenticated, function (req, res) {
     res.render("category");
 });
-app.get("/:category", function (req, res) {
+app.get("/:category", ensureAuthenticated, function (req, res) {
     let category = req.params.category;
     let categories = ['fakenews', 'hoax', 'phishing'];
     for (let i = 0; i < categories.length; i++) {

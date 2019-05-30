@@ -58,7 +58,7 @@
                     <center style="padding-top: 10px;">
                         <form action="/postnews/<%= news.id %>" method="POST">
                             <input type="submit" class="greenbtn w" value="POST">
-                            <a href="" class="redbtn w deletenews">DELETE</a>
+                            <a class="redbtn w" href="/deletenews/<%= news.id %>">DELETE</a>
                             <a href="/userrequest" class="yelbtn">BACK</a>
                         </form>
                     </center>

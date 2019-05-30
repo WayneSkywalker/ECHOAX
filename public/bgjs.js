@@ -10,21 +10,6 @@ $('#1').on('click', function (event) {
   $('.topic').removeClass('hide-item');
 });
 
-$('.deletenews').on('click', function (event) {
-  $target = $(event.target);
-  const id = $target.attr('data-id');
-  $.ajax({
-    type:'DELETE',
-    url: '/deletenews/' + id,
-    success: function(res){
-      alert('Delete news');
-      window.location.href='/userrequest';
-    },
-    error: function(err){
-      console.log(err);
-    }
-  });
-});
 
 $('#searchbtn').on('click', function (event) {
   $('.topic').addClass('hide-item')

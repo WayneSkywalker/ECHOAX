@@ -21,8 +21,6 @@
                                 <div class="ndes"><%= fakeNews[i].content.substring(0,45) + "..." %></div>
                                 <div class="ndt">BY <%= fakeNews[i].author %></div>
                                 <div class="ndt">POSTED ON <%= fakeNews[i].date_posted.toDateString() %></div>
-                                <div style="float: right;"><input type="button" name="vote" value="YES"> <%= fakeNews[i].voteYes %> <input
-                                        type="button" name="vote" value="NO"> <%= fakeNews[i].voteNo %> </div>
                             </div>
                         </div>
                     </a>
@@ -45,8 +43,6 @@
                                 <div class="ndes"><%= hoax[i].content.substring(0,45) + "..." %></div>
                                 <div class="ndt">BY <%= hoax[i].author %></div>
                                 <div class="ndt">POSTED ON <%= hoax[i].date_posted.toDateString() %></div>
-                                <div style="float: right;"><input type="button" name="vote" value="YES"> <%= hoax[i].voteYes %>
-                                    <input type="button" name="vote" value="NO"> <%= hoax[i].voteNo %> </div>
                             </div>
                         </div>
                     </a>
@@ -69,8 +65,6 @@
                                 <div class="ndes"><%= phishing[i].content.substring(0,45) + "..." %></div>
                                 <div class="ndt">BY <%= hoax[i].author %></div>
                                 <div class="ndt">POSTED ON <%= phishing[i].date_posted.toDateString() %></div>
-                                <div style="float: right;"><input type="button" name="vote" value="YES"> <%= phishing[i].voteYes %> <input
-                                        type="button" name="vote" value="NO"> <%= phishing[i].voteNo %> </div>
                             </div>
                         </div>
                     </a>

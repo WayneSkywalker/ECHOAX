@@ -5,6 +5,7 @@
     <% include ./partials/navbar %>
     <div id="login">
         <center><g style="font-size: 2em; color: #FFFFFF;">LOG IN</g></center>
+        <center></center>
         <form action="/login" method="POST">
             <div class="form-group">
                 <label for="user" class="w">USERNAME</label>
@@ -14,6 +15,7 @@
                 <label for="password" class="w">PASSWORD</label>
                 <input type="password" class="form-control" name="password" placeholder="Password" required="required">
             </div>
+            <center><p style="color: #ffffff;">IF YOU DON'T HAVE AN ACCOUNT, PLEASE <a href="/signup" id="signuplink">SIGN UP</a>.</p></center>
             <center><input type="submit" class="greenbtn w" value="LOG IN"></center>
         </form>
     </div>

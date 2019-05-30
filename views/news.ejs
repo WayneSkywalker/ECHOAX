@@ -7,30 +7,26 @@
         <img src="https://i.imgur.com/Dhhew9n.jpg" width="100%">
     </div>
     <% if( news.category==='fakenews'){ %> 
-        <div class="p pl25" style="font-size: 40px; ">FAKE NEWS <h class="w" style="font-size: 15px"><%= news.subCategory.toUpperCase() %></h></div>
+        <div class="p pl25 newshead">FAKE NEWS <h class="w" style="font-size: 15px"><%= news.subCategory.toUpperCase() %></h></div>
     <% } else if( news.category==='hoax'){ %>
-        <div class="p pl25" style="font-size: 40px; ">HOAX <h class="w" style="font-size: 15px"><%= news.subCategory.toUpperCase() %></h></div>
+        <div class="p pl25 newshead">HOAX <h class="w" style="font-size: 15px"><%= news.subCategory.toUpperCase() %></h></div>
     <% } else { %>
-        <div class="p pl25" style="font-size: 40px; ">HOAX</div>
+        <div class="p pl25 newshead">PHISHING</div>
     <% } %>
 
-    <div class="p pl25" style="font-size: 100px; line-height: 1;"><%= news.title %></div>
+    <div class="p pl25  news" style="font-size: 100px; line-height: 1;"><%= news.title %></div>
     <br>
-    <div class="gray pl25" style="line-height: 1;">POSTED ON <%= news.date_posted.toDateString() %> BY <%= news.author %> </div>
+    <div class="gray pl25" style="line-height: 1; display: block;">POSTED ON <%= news.date_posted.toDateString() %> BY <%= news.author %> </div>
     <br>
     <!-- content is here and required. -->
     <article class="w pl25">
         <%= news.content %>
     </article>
-    <!-- picture is here and required. -->
-
+    <br>
+    <img src="https://i.imgur.com/hHQOHIb.jpg" class="pl25" width="100%">
     <div class="w pl25">REFERENCE : <%= news.ref1 %></div> <!-- reference 1 is required. -->
     <% if(news.ref2) {%>
         <div class="w pl25">REFERENCE 2 : <%= news.ref2 %></div> <!-- reference 2 is here.-->
     <% } %>
-
-    <div>
-        <center><input type="button" class="voteYes" name="voteYes" value="YES">&emsp;<input type="button" class="voteNo" name="voteNo" value="NO"></center>
-    </div>
-    
+    <br><br><br><br><br><br>
 <% include ./partials/footer %>
