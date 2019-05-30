@@ -5,8 +5,8 @@ const express = require('express'),
     validator = require('express-validator'), 
     session = require('express-session'),
     config = require('./config/database'),
-    bcrypt = require('bcryptjs'),
-    flash = require('connect-flash');
+    bcrypt = require('bcryptjs');
+    //flash = require('connect-flash');
 const app = express();
 
 /* MongoDB */
@@ -34,15 +34,15 @@ app.use(session({
     secret: 'echoax',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    //cookie: { secure: true }
 }));
 
 /* express-messages */
-app.use(require('connect-flash')());
-app.use(function (req, res, next) {
-    res.locals.messages = require('express-messages')(req, res);
-    next();
-});
+// app.use(require('connect-flash')());
+// app.use(function (req, res, next) {
+//     res.locals.messages = require('express-messages')(req, res);
+//     next();
+// });
 
 /* express-validator */
 app.use(validator({
@@ -67,22 +67,22 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("*", function(req,res,next){
-    res.locals.member = req.member || null;
-    console.log(res.locals.member);
+    res.locals.user = req.user || null;
+    console.log(res.locals.user);
     next();
 });
 
 /* main */
 app.get("/", function(req,res){
-    res.render("main");
+    res.render("main",{Member: req.user});
 });
 app.get("/main", function (req, res) {
-    res.render("main");
+    res.render("main",{Member: req.user});
 });
 
 /* about us */
 app.get("/aboutus", function (req, res) {
-    res.render("aboutus");
+    res.render("aboutus",{Member: req.user});
 });
 
 /* Route Files */
@@ -93,7 +93,7 @@ app.get("/aboutus", function (req, res) {
 //---------------------------------------------------------------------------------------------------------------------------------------------
 /* sign up */
 app.get("/signup", function (req, res) {
-    res.render("signup");
+    res.render("signup", { Member: req.user });
 });
 app.post("/register", function (req, res) {
     //create account
@@ -146,7 +146,8 @@ app.post("/register", function (req, res) {
     if (errors || check) {
         //res.render("signup");
         //res.render("test",{errors: errors});
-        res.send(errors);
+        //res.send(errors);
+        res.redirect("/signup");
     } else {
         let newMember = new member({
             username: username,
@@ -170,8 +171,8 @@ app.post("/register", function (req, res) {
                         console.log(err);
                         return;
                     } else {
-                        res.flash("success", "You are now registered and can log in.")
-                        res.redirect("/main");
+                        //res.flash("success", "You are now registered and can log in.")
+                        res.redirect("/login");
                     }
                 });
             });
@@ -181,7 +182,7 @@ app.post("/register", function (req, res) {
 
 /* log in */
 app.get("/login", function (req, res) {
-    res.render("login");
+    res.render("login", { Member: req.user });
 });
 
 app.post("/login", function (req, res, next) {
@@ -197,32 +198,32 @@ app.post("/login", function (req, res, next) {
 // test
 app.get("/logout", function (req, res) {
     req.logout();
-    req.flash('success', 'You are logged out.');
+    //req.flash('success', 'You are logged out.');
     res.redirect("/login");
 });
 
 /* user's profile */
-app.get("/profile/:id", ensureAuthenticated,function (req, res) {          //unfinished
-    member.findById(req.params.id, function (err, member) {
+app.get("/profile", ensureAuthenticated,function (req, res) {          //unfinished
+    member.findById(req.user.id, function (err, member) {
         if (err) {
             console.log(err);
         } else {
             //console.log(member);
-            res.render("profile", { member: member });
+            res.render("profile", { member: req.user, Member: req.user });
         }
     });
 });
 /* edit user's profile */
-app.get("/editprofile/:id", ensureAuthenticated,function (req, res) {   //unfinished
-    member.findById(req.params.id, function(err, member){
+app.get("/editprofile",ensureAuthenticated,function (req, res) {   //unfinished
+    member.findById(req.user.id, function(err, member){
         if(err){
             console.log(err);
         } else {
-            res.render("edit",{member: member});
+            res.render("edit", { member: member, Member: req.user });
         }
     });
 });
-app.post("/editprofile/:id", ensureAuthenticated, function(req,res){         //unfinished
+app.post("/editprofile/:id", function(req,res){         //unfinished
     let oldpassword = req.body.oldpassword;
     let newpassword = req.body.newpassword;
     let renewpassword = req.body.renewpassword;
@@ -263,8 +264,6 @@ app.post("/editprofile/:id", ensureAuthenticated, function(req,res){         //u
                                 console.log(err);
                             }
                             newpassword = hash;
-                            console.log(newpassword);
-                            console.log("newpassword");
                             let mem = {};
                             mem.username = members.username;
                             mem.password = newpassword;
@@ -301,21 +300,21 @@ app.post("/editprofile/:id", ensureAuthenticated, function(req,res){         //u
 });
 //-----------------------------------------------------------------------------------------------------------------------------------------
 /* new */
-app.get("/new", ensureAuthenticated,function (req, res) {
+app.get("/new",function (req, res) {
     news.find({ category: 'fakenews', status: 'posted' }).sort({ date_posted: -1 }).limit(3).then(function (fakeNews) {
         news.find({ category: 'hoax', status: 'posted' }).sort({ date_posted: -1 }).limit(3).then(function (hoax) {
             news.find({ category: 'phishing', status: 'posted' }).sort({ date_posted: -1 }).limit(3).then(function (phishing) {
-                res.render("new", { fakeNews: fakeNews, hoax: hoax, phishing: phishing });
+                res.render("new", { fakeNews: fakeNews, hoax: hoax, phishing: phishing ,Member: req.user});
             });
         });
     });
 });
 /* popular */
-app.get("/popular", ensureAuthenticated, function (req, res) {
+app.get("/popular", function (req, res) {
     news.find({ category: 'fakenews', status: 'posted' }).sort({ voteYes: -1 }).limit(3).then(function (fakeNews) {
         news.find({ category: 'hoax', status: 'posted' }).sort({ voteYes: -1 }).limit(3).then(function (hoax) {
             news.find({ category: 'phishing', status: 'posted' }).sort({ voteYes: -1 }).limit(3).then(function (phishing) {
-                res.render("popular", { fakeNews: fakeNews, hoax: hoax, phishing: phishing });
+                res.render("popular", { fakeNews: fakeNews, hoax: hoax, phishing: phishing,Member: req.user });
             });
         });
     });
@@ -323,54 +322,54 @@ app.get("/popular", ensureAuthenticated, function (req, res) {
 
 /* search */
 // main search
-app.post("/mainsearch", ensureAuthenticated, function(req,res){      
+app.post("/mainsearch", function(req,res){      
     news.find({title: req.body.mainsearch,status: 'posted'}).then(function(findNews){
         if(findNews){
             console.log(findNews);
-            res.render("search",{news: findNews});
+            res.render("search", { news: findNews, Member: req.user });
         } else {
-            res.render("notfound");
+            res.redirect("notfound");
             //res.render("notfound",{text: req.body.mainsearch});
         }
     });
 });
 app.get("search", function(req,res){
-    res.render("search");
+    res.render("search", { Member: req.user });
 });
 //fake news search
-app.post("/fakenewssearch", ensureAuthenticated, function (req, res) {  
+app.post("/fakenewssearch", function (req, res) {  
     news.find({ title: req.body.fakenewssearch, category: 'fakenews', status: 'posted'}).then(function(findNews){
         if(findNews){
             console.log(findNews);
-            res.render("search",{news: findNews});
+            res.render("search", { news: findNews, Member: req.user });
         } else {
-            res.render("notfound");
+            res.redirect("/notfound");
         }
     }).catch(function(err){
         console.log(err);
     });
 });
 //hoax search
-app.post("/hoaxsearch", ensureAuthenticated, function (req, res) {
+app.post("/hoaxsearch",  function (req, res) {
     news.find({ title: req.body.hoaxsearch, category: 'hoax', status: 'posted' }).then(function (findNews) {
         if (findNews) {
             console.log(findNews);
-            res.render("search", { news: findNews });
+            res.render("search", { news: findNews, Member: req.user });
         } else {
-            res.render("notfound");
+            res.redirect("/notfound");
         }
     }).catch(function (err) {
         console.log(err);
     });
 });
 //phishing search
-app.post("/phissearch", ensureAuthenticated, function (req, res) {
+app.post("/phissearch", function (req, res) {
     member.find({ title: req.body.phissearch, category: 'phishing' }).then(function (findNews) {
         if (findNews) {
             console.log(findNews);
-            res.render("search", { news: findNews });
+            res.render("search", { news: findNews, Member: req.user  });
         } else {
-            res.render("notfound");
+            res.redirect("/notfound");
         }
     }).catch(function (err) {
         console.log(err);
@@ -378,29 +377,29 @@ app.post("/phissearch", ensureAuthenticated, function (req, res) {
 });
 
 /* single news */
-app.get("/news/:id", ensureAuthenticated,function (req, res) {
+app.get("/news/:id", function (req, res) {
     news.findById(req.params.id, function (err, news) {
         if(err){
             //console.log(req.params.id);
             console.log(err);
         } else {
-            res.render("news",{news: news});
+            res.render("news", { news: news, Member: req.user });
         }
     });
 });
 
 /* create news */
-app.get("/echo",ensureAuthenticated, function (req, res) {          //unfinished
-    res.render("echo");
+app.get("/echo", ensureAuthenticated, function (req, res) {
+    res.render("echo", { member: req.user });
 });
-app.post("/echo", ensureAuthenticated,function(req,res){
+app.post("/echo",ensureAuthenticated,function(req,res){
     let echo = new news();
     echo.title = req.body.title;
     echo.category = req.body.category;
     echo.subCategory = req.body.subcategory;
     //echo.author = req.body.author;
-    //echo.author = req.member.username;
-    echo.author = 'quay';
+    echo.author = req.user.username;
+    //echo.author = 'quay';
     echo.content = req.body.echo;
     echo.ref1 = req.body.ref1;
     echo.ref2 = req.body.ref2;
@@ -409,17 +408,16 @@ app.post("/echo", ensureAuthenticated,function(req,res){
             console.log(err);
             return;
         } else {
-            console.log("success!");
-            res.redirect("/profile");
+            res.redirect("/success");
         }
     })
 });
 
 /* admin's part */
 // view users's requests
-app.get("/userrequest", ensureAuthenticated , function (req, res) {      //unfinished 
+app.get("/userrequest",ensureAuthenticated,  function (req, res) {      //unfinished 
     news.find({ status: 'wait' }).then(function (findNews) {
-        res.render("user_request",{news: findNews});
+        res.render("user_request", { news: findNews, Member: req.user });
     });
     //res.render("user_request");
 });
@@ -429,13 +427,13 @@ app.get("/userecho/:id", ensureAuthenticated, function (req, res) {         //un
         if(err){
             console.log(err);
         } else {
-            res.render("user_echo",{news: news});
+            res.render("user_echo", { news: news, Member: req.user});
         }
     });
 });
 
 // grant post permission
-app.post("/postnews/:id", ensureAuthenticated, function(req,res){
+app.post("/postnews/:id", function(req,res){
     let query = {_id: req.params.id};
     news.findById(req.params.id, function(err,newss){
         if(err){
@@ -453,7 +451,7 @@ app.post("/postnews/:id", ensureAuthenticated, function(req,res){
     });
 });
 // delete user's post
-app.get("/deletenews/:id", ensureAuthenticated, function(req,res){
+app.get("/deletenews/:id", function(req,res){
     news.findByIdAndRemove(req.params.id, function (err) {
         if (err) {
             console.log(err);
@@ -463,11 +461,11 @@ app.get("/deletenews/:id", ensureAuthenticated, function(req,res){
     });
 });
 
-app.get("/notfound",ensureAuthenticated,function(req,res){
-    res.render("notfound");
+app.get("/notfound",function(req,res){
+    res.render("notfound", { Member: req.user });
 });
-app.get("/success",ensureAuthenticated,function(req,res){
-    res.render("success");
+app.get("/success",function(req,res){
+    res.render("success", { Member: req.user });
 });
 
 function ensureAuthenticated(req,res,next){
@@ -479,18 +477,18 @@ function ensureAuthenticated(req,res,next){
 }
 
 /* category */
-app.get("/category", ensureAuthenticated, function (req, res) {
-    res.render("category");
+app.get("/category", function (req, res) {
+    res.render("category", { member: req.user });
 });
-app.get("/:category", ensureAuthenticated, function (req, res) {
+app.get("/:category", function (req, res) {
     let category = req.params.category;
     let categories = ['fakenews', 'hoax', 'phishing'];
     for (let i = 0; i < categories.length; i++) {
         if (category === categories[i]) {
-            if ((category === 'fakenews') || (category === 'hoax')) res.render("category_sub", { category: category });
+            if ((category === 'fakenews') || (category === 'hoax')) res.render("category_sub", { category: category, Member: req.user });
             else {
                 news.find({ category: category, status: 'posted' }).then(function (findNews) {
-                    res.render("phishing", { news: findNews });
+                    res.render("phishing", { news: findNews, Member: req.user });
                 }).catch(function (err) {
                     console.log(err);
                 });
@@ -511,7 +509,7 @@ app.get("/:category/:subcategory", function (req, res) {
                 for (let j = 0; j < fakecate.length; j++) {
                     if (subcategory === fakecate[j]) {
                         news.find({ category: category, subCategory: subcategory ,status: 'posted' }).then(function (findNews) {
-                            res.render("contents", { category: category, subcategory: subcategory, news: findNews });
+                            res.render("contents", { category: category, subcategory: subcategory, news: findNews, member: req.user });
                         }).catch(function (err) {
                             console.log(err);
                         });
@@ -521,7 +519,7 @@ app.get("/:category/:subcategory", function (req, res) {
                 for (let j = 0; j < hoaxcate.length; j++) {
                     if (subcategory === hoaxcate[j]) {
                         news.find({ category: category, subCategory: subcategory, status: 'posted' }).then(function (findNews) {
-                            res.render("contents", { category: category, subcategory: subcategory, news: findNews });
+                            res.render("contents", { category: category, subcategory: subcategory, news: findNews, member: req.user });
                         }).catch(function (err) {
                             console.log(err);
                         });

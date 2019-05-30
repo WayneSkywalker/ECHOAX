@@ -6,15 +6,15 @@ const bcrypt = require('bcryptjs');
 module.exports = function(passport){
     passport.use(new LocalStrategy(function(username, password, done){
         let query = {username: username};
-        member.findOne(query, function(err, member){
+        member.findOne(query, function(err, Member){
             if(err) throw err;
-            if(!member){
+            if(!Member){
                 return done(null, false, {message: 'No user found'});
             }
-            bcrypt.compare(password, member.password, function(err,isMatch){
+            bcrypt.compare(password, Member.password, function(err,isMatch){
                 if(err) throw err;
                 if(isMatch){
-                    return done(null, member);
+                    return done(null, Member);
                 } else {
                     return done(null, false, { message: 'Your password is wrong' });
                 }
@@ -22,13 +22,13 @@ module.exports = function(passport){
         });
     }));
 
-    passport.serializeUser(function (member, done) {
-        done(null, member.id);
+    passport.serializeUser(function (Member, done) {
+        done(null, Member.id);
     });
 
     passport.deserializeUser(function (id, done) {
-        member.findById(id, function (err, member) {
-            done(err, member);
+        member.findById(id, function (err, Member) {
+            done(err, Member);
         });
     });
 }
