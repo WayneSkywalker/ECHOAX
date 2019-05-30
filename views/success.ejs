@@ -5,8 +5,8 @@
     <% include ./partials/navbar %>
     <div style="display: inline;  position:fixed; top:50%; left:50%; transform: translate(-50%,-50%); color:white; text-align:center; ">
         <g style="font-size: 5em">ECHO Success!!</g>
-        <form>
-            <button href="/profile" class="greenbtn w">BACK TO PROFILE</button>
+        <form action="/profile" method="GET">
+            <button class="greenbtn w">BACK TO PROFILE</button>
         </form>
     </div>
 <% include ./partials/footer %>

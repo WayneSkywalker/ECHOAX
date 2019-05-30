@@ -19,8 +19,10 @@
     <% } else if( news.category==='hoax'){ %>
         <div class="p pl25 news" style="font-size: 100px; line-height: 1; color: #fefe99;"><%= news.title %></div>
     <% } else { %>
-        <div class="p pl25 newshead" style="color: #ffa6a6;">PHISHING</div>
+        <div class="p pl25 newshead" style="color: #ffa6a6;"><%= news.title %></div>
     <% } %>
+    <br>
+    <br>
     <div class="gray pl25" style="line-height: 1; display: block;">POSTED ON <%= news.date_posted.toDateString() %> BY <%= news.author %> </div>
     <br>
     <!-- content is here and required. -->
