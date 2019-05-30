@@ -330,7 +330,7 @@ app.post("/mainsearch", function(req,res){
             console.log(findNews);
             res.render("search", { news: findNews, Member: req.user });
         } else {
-            res.redirect("notfound");
+            res.redirect("/notfound");
             //res.render("notfound",{text: req.body.mainsearch});
         }
     });

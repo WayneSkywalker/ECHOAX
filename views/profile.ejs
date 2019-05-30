@@ -23,12 +23,12 @@
             <div class="col-25">
                 <div class="card">
                     <hd>GENDER</hd>
-                    <%= member.gender %>
+                    &ensp;&ensp;&ensp;<%= member.gender.toUpperCase() %>
                     <hd>BIRTHDATE</hd>
-                    <%= member.birthdate.toDateString() %>
+                    &ensp;&ensp;&ensp;<%= member.birthdate.toDateString() %>
                     <hd>LOCATION</hd>
-                    <% if(member.location){ console.log(member.location); } else { console.log("-"); } %>
-                    <center><input type="button" name="edit" value="EDIT PROFILE" onclick="location.href='edit';">
+                    &ensp;&ensp;&ensp;<%= member.location %>
+                    <center><input type="button" name="edit" value="EDIT PROFILE" onclick="location.href='/edit';">
                     </center>
                 </div>
             </div>
@@ -36,7 +36,7 @@
                 <div class="tab">
                     <button class="tablinks active" onclick="opentab(event, 'OVERVIEW')">OVERVIEW</button>
                     <button class="tablinks" onclick="opentab(event, 'STAT')">STAT</button>
-                    <% if(Member.status === 'admin') { %>
+                    <% if(member.level === 'admin') { %>
                     <a href="/userrequest"><button class="w" style="float: right; background-color: yellow; border-radius: 10px;">USER'S
                             ECHO</button></a>
                     <% } %>
