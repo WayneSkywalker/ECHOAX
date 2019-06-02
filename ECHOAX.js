@@ -90,7 +90,6 @@ app.get("/aboutus", function (req, res) {
 // let news = require("./routes/news");
 // app.use("/members", members);
 // app.use("/news", news);
-//---------------------------------------------------------------------------------------------------------------------------------------------
 /* sign up */
 app.get("/signup", function (req, res) {
     res.render("signup", { Member: req.user });
@@ -173,7 +172,6 @@ app.post("/register", function (req, res) {
                         console.log(err);
                         return;
                     } else {
-                        //res.flash("success", "You are now registered and can log in.")
                         res.redirect("/login");
                     }
                 });
@@ -189,7 +187,6 @@ app.get("/login", function (req, res) {
 
 app.post("/login", function (req, res, next) {
     passport.authenticate("local", {
-        //successRedirect: "/",
         successRedirect: "/",
         failureRedirect: "/login",
         failureFlash: true
@@ -200,12 +197,11 @@ app.post("/login", function (req, res, next) {
 // test
 app.get("/logout", function (req, res) {
     req.logout();
-    //req.flash('success', 'You are logged out.');
     res.redirect("/login");
 });
 
 /* user's profile */
-app.get("/profile", ensureAuthenticated,function (req, res) {          //unfinished
+app.get("/profile", ensureAuthenticated,function (req, res) {
     member.findById(req.user.id, function (err, member) {
         if (err) {
             console.log(err);
@@ -216,7 +212,7 @@ app.get("/profile", ensureAuthenticated,function (req, res) {          //unfinis
     });
 });
 /* edit user's profile */
-app.get("/editprofile",ensureAuthenticated,function (req, res) {   //unfinished
+app.get("/editprofile",ensureAuthenticated,function (req, res) {
     member.findById(req.user.id, function(err, member){
         if(err){
             console.log(err);
@@ -225,7 +221,7 @@ app.get("/editprofile",ensureAuthenticated,function (req, res) {   //unfinished
         }
     });
 });
-app.post("/editprofile/:id", function(req,res){         //unfinished
+app.post("/editprofile/:id", function(req,res){
     let oldpassword = req.body.oldpassword;
     let newpassword = req.body.newpassword;
     let renewpassword = req.body.renewpassword;
@@ -286,21 +282,21 @@ app.post("/editprofile/:id", function(req,res){         //unfinished
                                     console.log(err);
                                     return;
                                 } else {
-                                    res.redirect("/profile"); //wrong route
+                                    res.redirect("/profile");
                                 }
                             });
                         });
                     });
                 } else {
-                    res.redirect("/editprofile"); //wrong route
+                    res.redirect("/editprofile");
                 }
             } else {
-                res.redirect("/editprofile");   //wrong route
+                res.redirect("/editprofile");
             }
         }
     });
 });
-//-----------------------------------------------------------------------------------------------------------------------------------------
+
 /* new */
 app.get("/new",function (req, res) {
     news.find({ category: 'fakenews', status: 'posted' }).sort({ date_posted: -1 }).limit(3).then(function (fakeNews) {
@@ -331,7 +327,6 @@ app.post("/mainsearch", function(req,res){
             res.render("search", { news: findNews, Member: req.user });
         } else {
             res.redirect("/notfound");
-            //res.render("notfound",{text: req.body.mainsearch});
         }
     });
 });
@@ -382,7 +377,6 @@ app.post("/phissearch", function (req, res) {
 app.get("/news/:id", function (req, res) {
     news.findById(req.params.id, function (err, news) {
         if(err){
-            //console.log(req.params.id);
             console.log(err);
         } else {
             res.render("news", { news: news, Member: req.user });
@@ -399,9 +393,7 @@ app.post("/echo",ensureAuthenticated,function(req,res){
     echo.title = req.body.title;
     echo.category = req.body.category;
     echo.subCategory = req.body.subcategory;
-    //echo.author = req.body.author;
     echo.author = req.user.username;
-    //echo.author = 'quay';
     echo.content = req.body.echo;
     echo.ref1 = req.body.ref1;
     echo.ref2 = req.body.ref2;
@@ -417,14 +409,14 @@ app.post("/echo",ensureAuthenticated,function(req,res){
 
 /* admin's part */
 // view users's requests
-app.get("/userrequest",ensureAuthenticated,  function (req, res) {      //unfinished 
+app.get("/userrequest",ensureAuthenticated,  function (req, res) {
     news.find({ status: 'wait' }).then(function (findNews) {
         res.render("user_request", { news: findNews, Member: req.user });
     });
     //res.render("user_request");
 });
 // view user's news
-app.get("/userecho/:id", ensureAuthenticated, function (req, res) {         //unfinished
+app.get("/userecho/:id", ensureAuthenticated, function (req, res) {
     news.findById(req.params.id, function(err,news){
         if(err){
             console.log(err);
@@ -532,13 +524,12 @@ app.get("/:category/:subcategory", function (req, res) {
                     }
                 }
             }
-            //res.render("phishing");
         }
     }
 });
 
 //------------------------------------------------------------------------------------------------------------------------------------app
-/* listen to port 4000 */
+/* listen to port 3000 */
 app.listen(3000,function(){
     console.log("listen to 3000");
 });
